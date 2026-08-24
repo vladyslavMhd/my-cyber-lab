@@ -1,3 +1,4 @@
+```javascript
 // ========================================
 // MY CYBER LAB
 // Interactive JavaScript
