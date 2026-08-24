@@ -1,826 +1,366 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>MY CYBER LAB // VLAD</title>
-  <meta name="description" content="Vlad's personal cybersecurity lab and portfolio.">
+    <title>My Cyber Lab</title>
+    <meta name="description" content="My Cyber Lab — cybersecurity, Linux, networking and CTF projects.">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="loader">
-  <div class="loader-box">
-    <span>INITIALIZING</span>
-    <strong>MY CYBER LAB</strong>
+    <div class="scanlines"></div>
+    <div id="particles"></div>
 
-    <div class="loader-line">
-      <i></i>
-    </div>
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <a href="#" class="logo">
+            <span class="prompt">></span> MY_CYBER_LAB
+        </a>
 
-    <small>SYSTEM READY</small>
-  </div>
-</div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#labs">Labs</a>
+            <a href="#tools">Tools</a>
+            <a href="#projects">Projects</a>
+            <a href="#about">About</a>
+        </nav>
 
-<div class="cursor"></div>
-<div class="cursor-dot"></div>
+        <button class="menu-btn" id="menuBtn">☰</button>
+    </header>
 
-<div class="bg-grid"></div>
-<div class="orb orb-a"></div>
-<div class="orb orb-b"></div>
-<div id="particles"></div>
+    <!-- HERO -->
+    <main id="home">
 
+        <section class="hero">
 
-<header class="nav">
+            <div class="hero-content">
 
-  <a class="logo" href="#home">
-    <span>V</span>
-    <b>MY CYBER LAB</b>
-  </a>
+                <div class="status">
+                    <span class="status-dot"></span>
+                    SYSTEM ONLINE
+                </div>
 
-  <button class="menu">☰</button>
+                <p class="terminal-line">
+                    root@cyberlab:~$ whoami
+                </p>
 
-  <nav>
-    <a href="#about">ABOUT</a>
-    <a href="#learning">LEARNING</a>
-    <a href="#lab">LAB</a>
-    <a href="#projects">PROJECTS</a>
-    <a href="#contact">CONTACT</a>
-  </nav>
+                <h1>
+                    MY <span>CYBER</span><br>
+                    LAB<span class="cursor">_</span>
+                </h1>
 
-  <a class="github" href="https://github.com/" target="_blank">
-    GITHUB ↗
-  </a>
+                <p class="subtitle">
+                    Cybersecurity • Linux • Networking • CTF
+                </p>
 
-</header>
+                <p class="description">
+                    Welcome to my digital laboratory.  
+                    A place where I learn cybersecurity, build labs,
+                    experiment with Linux and explore how systems work.
+                </p>
 
+                <div class="hero-buttons">
+                    <a href="#labs" class="btn primary">
+                        ENTER THE LAB →
+                    </a>
 
-<main>
+                    <a href="#projects" class="btn secondary">
+                        VIEW PROJECTS
+                    </a>
+                </div>
 
-<!-- HERO -->
+            </div>
 
-<section class="hero" id="home">
+            <!-- TERMINAL -->
+            <div class="terminal">
 
-  <div class="hero-left reveal">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
 
-    <div class="status">
-      <i></i>
-      SYSTEM ONLINE
-      <span>•</span>
-      CYBER LAB / 2026
-    </div>
+                    <span>cyberlab@kali:~</span>
+                </div>
 
-    <p class="mono green">
-      root@vlad:~$ whoami
-    </p>
+                <div class="terminal-body">
 
-    <h1>
-      CYBER<br>
-      <em>SECURITY</em><br>
-      LAB.
-    </h1>
+                    <p>
+                        <span class="green">┌──(</span>
+                        <span class="blue">kali㉿cyberlab</span>
+                        <span class="green">)-[~]</span>
+                    </p>
 
-    <p class="hero-copy">
-      I'm <b>Vlad</b>, a 16-year-old cybersecurity enthusiast.
-      I build labs, learn Linux and networking, explore web security,
-      and turn curiosity into real skills.
-    </p>
+                    <p>
+                        <span class="green">└─$</span>
+                        <span id="typedCommand"></span>
+                        <span class="terminal-cursor">█</span>
+                    </p>
 
-    <div class="buttons">
+                    <div id="terminalOutput"></div>
 
-      <a class="btn primary" href="#lab">
-        ENTER THE LAB
-        <span>→</span>
-      </a>
+                </div>
+            </div>
 
-      <a class="btn secondary" href="#about">
-        ABOUT ME
-        <span>↗</span>
-      </a>
+        </section>
 
-    </div>
+        <!-- STATS -->
+        <section class="stats">
 
-    <div class="stats">
+            <div class="stat">
+                <strong>24/7</strong>
+                <span>LEARNING</span>
+            </div>
 
-      <div>
-        <b data-count="16">0</b>
-        <span>YEARS OLD</span>
-      </div>
+            <div class="stat">
+                <strong>5+</strong>
+                <span>SECURITY TOOLS</span>
+            </div>
 
-      <div>
-        <b data-count="5">0</b>
-        <span>LEARNING AREAS</span>
-      </div>
+            <div class="stat">
+                <strong>∞</strong>
+                <span>EXPERIMENTS</span>
+            </div>
 
-      <div>
-        <b>∞</b>
-        <span>CURIOSITY</span>
-      </div>
+        </section>
 
-    </div>
+        <!-- LABS -->
+        <section id="labs" class="section">
 
-  </div>
+            <div class="section-title">
+                <span>01 //</span>
+                <h2>MY LABS</h2>
+            </div>
 
+            <p class="section-description">
+                Areas I'm currently exploring and practicing.
+            </p>
 
-  <div class="terminal-wrap reveal">
+            <div class="cards">
 
-    <div class="terminal">
+                <article class="card">
+                    <div class="card-icon">🐉</div>
+                    <h3>KALI LINUX</h3>
+                    <p>
+                        Linux administration, security tools,
+                        scripting and penetration testing labs.
+                    </p>
+                    <span class="tag">LINUX</span>
+                </article>
 
-      <div class="term-head">
+                <article class="card">
+                    <div class="card-icon">🌐</div>
+                    <h3>NETWORKING</h3>
+                    <p>
+                        TCP/IP, DNS, ports, packet analysis,
+                        network configuration and troubleshooting.
+                    </p>
+                    <span class="tag">NETWORK</span>
+                </article>
 
-        <div class="dots">
-          <i></i>
-          <i></i>
-          <i></i>
+                <article class="card">
+                    <div class="card-icon">🔐</div>
+                    <h3>WEB SECURITY</h3>
+                    <p>
+                        Learning HTTP, authentication,
+                        vulnerabilities and secure web development.
+                    </p>
+                    <span class="tag">WEB</span>
+                </article>
+
+                <article class="card">
+                    <div class="card-icon">🧪</div>
+                    <h3>CTF LABS</h3>
+                    <p>
+                        Legal capture-the-flag environments,
+                        challenges and cybersecurity practice.
+                    </p>
+                    <span class="tag">CTF</span>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- TOOLS -->
+        <section id="tools" class="section darker">
+
+            <div class="section-title">
+                <span>02 //</span>
+                <h2>TOOLS</h2>
+            </div>
+
+            <div class="tools-grid">
+
+                <div class="tool">
+                    <span>01</span>
+                    <strong>NMAP</strong>
+                    <small>NETWORK SCANNER</small>
+                </div>
+
+                <div class="tool">
+                    <span>02</span>
+                    <strong>WIRESHARK</strong>
+                    <small>PACKET ANALYSIS</small>
+                </div>
+
+                <div class="tool">
+                    <span>03</span>
+                    <strong>BURP SUITE</strong>
+                    <small>WEB SECURITY</small>
+                </div>
+
+                <div class="tool">
+                    <span>04</span>
+                    <strong>METASPLOIT</strong>
+                    <small>SECURITY TESTING</small>
+                </div>
+
+                <div class="tool">
+                    <span>05</span>
+                    <strong>JOHN</strong>
+                    <small>PASSWORD AUDITING</small>
+                </div>
+
+                <div class="tool">
+                    <span>06</span>
+                    <strong>HASHCAT</strong>
+                    <small>HASH RECOVERY</small>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="section">
+
+            <div class="section-title">
+                <span>03 //</span>
+                <h2>PROJECTS</h2>
+            </div>
+
+            <div class="project">
+
+                <div class="project-number">01</div>
+
+                <div class="project-info">
+                    <h3>MY CYBER LAB</h3>
+
+                    <p>
+                        Personal cybersecurity website built with
+                        HTML, CSS and JavaScript and hosted using
+                        GitHub Pages.
+                    </p>
+
+                    <div class="project-tags">
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JAVASCRIPT</span>
+                        <span>GITHUB</span>
+                    </div>
+                </div>
+
+                <a href="https://github.com/" target="_blank" class="project-link">
+                    GITHUB ↗
+                </a>
+
+            </div>
+
+            <div class="project">
+
+                <div class="project-number">02</div>
+
+                <div class="project-info">
+                    <h3>HOME SECURITY LAB</h3>
+
+                    <p>
+                        Personal virtual environment for learning
+                        Linux, networking and defensive security.
+                    </p>
+
+                    <div class="project-tags">
+                        <span>KALI</span>
+                        <span>LINUX</span>
+                        <span>VM</span>
+                    </div>
+                </div>
+
+                <span class="coming-soon">IN PROGRESS</span>
+
+            </div>
+
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about" class="section about">
+
+            <div class="section-title">
+                <span>04 //</span>
+                <h2>ABOUT ME</h2>
+            </div>
+
+            <div class="about-box">
+
+                <div class="about-avatar">
+                    <span>VL</span>
+                </div>
+
+                <div>
+                    <h3>CYBERSECURITY ENTHUSIAST</h3>
+
+                    <p>
+                        I'm learning cybersecurity and Linux,
+                        building virtual labs and experimenting
+                        with different security technologies.
+                    </p>
+
+                    <p>
+                        This website is my personal space to document
+                        projects, experiments and things I learn.
+                    </p>
+
+                    <div class="skills">
+                        <span>LINUX</span>
+                        <span>NETWORKING</span>
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JAVASCRIPT</span>
+                        <span>CYBERSECURITY</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div>
+            <span class="green">root@cyberlab</span>:~$ exit
         </div>
-
-        <span>vlad@cyberlab — bash</span>
-
-        <b>● LIVE</b>
-
-      </div>
-
-
-      <div class="term-body">
 
         <p>
-          <span class="green">┌──(</span>
-          <span class="cyan">vlad㉿cyberlab</span>
-          <span class="green">)-[~]</span>
+            © 2026 My Cyber Lab • Built with code & curiosity.
         </p>
 
-        <p>
-          <span class="green">└─$</span>
-          <span id="typed"></span>
-          <i class="caret">█</i>
+        <p class="footer-status">
+            ● ALL SYSTEMS OPERATIONAL
         </p>
 
-        <div id="termOutput">
+    </footer>
 
-          <p class="muted">
-            Booting personal cyber lab...
-          </p>
-
-          <p class="green">
-            [ OK ] Linux environment
-          </p>
-
-          <p class="green">
-            [ OK ] Learning mode
-          </p>
-
-          <p class="cyan">
-            [INFO] Authorized labs only.
-          </p>
-
-        </div>
-
-
-        <div class="meter">
-          <span>CPU</span>
-
-          <i>
-            <b style="width:42%"></b>
-          </i>
-
-          <small>42%</small>
-        </div>
-
-
-        <div class="meter">
-          <span>LAB</span>
-
-          <i>
-            <b style="width:84%"></b>
-          </i>
-
-          <small>84%</small>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="terminal-badge">
-      SECURITY<br>
-      <strong>LEARNING</strong>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- TICKER -->
-
-<div class="ticker">
-
-  <div>
-    LINUX
-    <span>•</span>
-
-    NETWORKING
-    <span>•</span>
-
-    WEB SECURITY
-    <span>•</span>
-
-    CTF
-    <span>•</span>
-
-    CYBERSECURITY
-    <span>•</span>
-
-    LINUX
-    <span>•</span>
-
-    NETWORKING
-    <span>•</span>
-
-    WEB SECURITY
-    <span>•</span>
-
-    CTF
-    <span>•</span>
-  </div>
-
-</div>
-
-
-<!-- ABOUT -->
-
-<section class="section" id="about">
-
-  <div class="section-title">
-    <small>01 //</small>
-    <h2>ABOUT <em>ME</em></h2>
-  </div>
-
-
-  <div class="about-grid">
-
-    <div class="profile-card reveal">
-
-      <div class="profile-top">
-        <span>PROFILE_001</span>
-        <span>ONLINE</span>
-      </div>
-
-      <div class="avatar">
-        VL
-      </div>
-
-      <h3>VLAD</h3>
-
-      <p>
-        CYBERSECURITY ENTHUSIAST
-      </p>
-
-
-      <div class="profile-lines">
-
-        <span>
-          AGE
-          <b>16</b>
-        </span>
-
-        <span>
-          FOCUS
-          <b>SECURITY</b>
-        </span>
-
-        <span>
-          STATUS
-          <b class="green">LEARNING</b>
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <div class="about-copy reveal">
-
-      <span class="label">
-        01 / WHO AM I?
-      </span>
-
-      <h3>
-        Curious about how systems work —
-        and how to make them safer.
-      </h3>
-
-      <p>
-        Cybersecurity grabbed my attention because it mixes
-        technology, problem solving and creativity.
-        I enjoy learning how operating systems, networks
-        and websites work under the hood.
-      </p>
-
-      <p>
-        This website is my personal lab:
-        a place for projects, notes, experiments and progress.
-        Everything I practice is done in legal, authorized environments.
-      </p>
-
-
-      <div class="chips">
-
-        <span>CYBERSECURITY</span>
-        <span>KALI LINUX</span>
-        <span>NETWORKING</span>
-        <span>WEB SECURITY</span>
-        <span>CTF</span>
-        <span>LINUX</span>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- LEARNING -->
-
-<section class="section learning" id="learning">
-
-  <div class="section-title">
-    <small>02 //</small>
-    <h2>WHAT I'M <em>LEARNING</em></h2>
-  </div>
-
-
-  <div class="roadmap">
-
-    <article class="road reveal">
-
-      <span>01</span>
-
-      <div class="road-icon">⌁</div>
-
-      <h3>LINUX</h3>
-
-      <p>
-        Terminal, permissions, processes,
-        bash and system administration.
-      </p>
-
-      <b>FOUNDATION</b>
-
-    </article>
-
-
-    <article class="road reveal">
-
-      <span>02</span>
-
-      <div class="road-icon">◎</div>
-
-      <h3>NETWORKING</h3>
-
-      <p>
-        TCP/IP, DNS, ports, services
-        and packet analysis.
-      </p>
-
-      <b>BUILDING</b>
-
-    </article>
-
-
-    <article class="road reveal">
-
-      <span>03</span>
-
-      <div class="road-icon">⌘</div>
-
-      <h3>WEB SECURITY</h3>
-
-      <p>
-        HTTP, authentication, secure coding
-        and common web vulnerabilities.
-      </p>
-
-      <b>BUILDING</b>
-
-    </article>
-
-
-    <article class="road reveal">
-
-      <span>04</span>
-
-      <div class="road-icon">✦</div>
-
-      <h3>CTF</h3>
-
-      <p>
-        Legal challenge environments
-        for turning theory into practical skills.
-      </p>
-
-      <b>EXPLORING</b>
-
-    </article>
-
-
-    <article class="road reveal">
-
-      <span>05</span>
-
-      <div class="road-icon">◇</div>
-
-      <h3>DEFENSE</h3>
-
-      <p>
-        Security mindset, hardening,
-        monitoring and understanding threats.
-      </p>
-
-      <b>NEXT</b>
-
-    </article>
-
-  </div>
-
-</section>
-
-
-<!-- LAB -->
-
-<section class="section lab-section" id="lab">
-
-  <div class="section-title">
-    <small>03 //</small>
-    <h2>THE <em>LAB</em></h2>
-  </div>
-
-
-  <div class="lab-grid">
-
-    <article class="lab-card reveal">
-
-      <span class="card-no">LAB_01</span>
-
-      <div class="big-icon">⌘</div>
-
-      <h3>LINUX LAB</h3>
-
-      <p>
-        My Linux playground for command-line skills,
-        system administration and experimentation.
-      </p>
-
-      <a href="#contact">
-        OPEN LAB →
-      </a>
-
-    </article>
-
-
-    <article class="lab-card reveal">
-
-      <span class="card-no">LAB_02</span>
-
-      <div class="big-icon">◉</div>
-
-      <h3>NETWORK LAB</h3>
-
-      <p>
-        Learning networking fundamentals,
-        packet flows, services and troubleshooting.
-      </p>
-
-      <a href="#contact">
-        OPEN LAB →
-      </a>
-
-    </article>
-
-
-    <article class="lab-card reveal">
-
-      <span class="card-no">LAB_03</span>
-
-      <div class="big-icon">⌁</div>
-
-      <h3>WEB LAB</h3>
-
-      <p>
-        Safe practice with web applications,
-        HTTP concepts and defensive security.
-      </p>
-
-      <a href="#contact">
-        OPEN LAB →
-      </a>
-
-    </article>
-
-
-    <article class="lab-card reveal">
-
-      <span class="card-no">LAB_04</span>
-
-      <div class="big-icon">✦</div>
-
-      <h3>CTF LAB</h3>
-
-      <p>
-        Authorized challenges that make
-        security concepts practical and fun.
-      </p>
-
-      <a href="#contact">
-        OPEN LAB →
-      </a>
-
-    </article>
-
-  </div>
-
-</section>
-
-
-<!-- VIDEO -->
-
-<section class="section video-section">
-
-  <div class="section-title">
-    <small>04 //</small>
-    <h2>WATCH THE <em>LAB</em></h2>
-  </div>
-
-
-  <div class="video-grid">
-
-    <div class="video-frame reveal">
-
-      <iframe
-        src="https://www.youtube.com/embed/AoFo7wGkEro"
-        title="Kali Linux"
-        loading="lazy"
-        allowfullscreen>
-      </iframe>
-
-      <div class="scan"></div>
-
-    </div>
-
-
-    <div class="video-copy reveal">
-
-      <span class="label">
-        FEATURED / VIDEO
-      </span>
-
-      <h3>
-        LEARNING THE LINUX SIDE
-        OF CYBERSECURITY.
-      </h3>
-
-      <p>
-        A visual starting point for the kind of Linux
-        environment used while learning cybersecurity.
-      </p>
-
-      <a
-        href="https://www.youtube.com/watch?v=AoFo7wGkEro"
-        target="_blank">
-        WATCH ON YOUTUBE ↗
-      </a>
-
-      <small>
-        Replace this embed later with your own project demo.
-      </small>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- TOOLKIT -->
-
-<section class="section tools">
-
-  <div class="section-title">
-    <small>05 //</small>
-    <h2>MY <em>TOOLKIT</em></h2>
-  </div>
-
-
-  <div class="tool-grid">
-
-    <div class="tool reveal">
-      <b>01</b>
-      <strong>NMAP</strong>
-      <span>NETWORK DISCOVERY</span>
-    </div>
-
-    <div class="tool reveal">
-      <b>02</b>
-      <strong>WIRESHARK</strong>
-      <span>PACKET ANALYSIS</span>
-    </div>
-
-    <div class="tool reveal">
-      <b>03</b>
-      <strong>BURP SUITE</strong>
-      <span>WEB SECURITY</span>
-    </div>
-
-    <div class="tool reveal">
-      <b>04</b>
-      <strong>METASPLOIT</strong>
-      <span>LAB FRAMEWORK</span>
-    </div>
-
-    <div class="tool reveal">
-      <b>05</b>
-      <strong>JOHN</strong>
-      <span>PASSWORD AUDITING</span>
-    </div>
-
-    <div class="tool reveal">
-      <b>06</b>
-      <strong>HASHCAT</strong>
-      <span>HASH RECOVERY</span>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- PROJECTS -->
-
-<section class="section projects" id="projects">
-
-  <div class="section-title">
-    <small>06 //</small>
-    <h2>PROJECT <em>LOG</em></h2>
-  </div>
-
-
-  <div class="project-list">
-
-    <article class="project reveal">
-
-      <span>P-001</span>
-
-      <div>
-        <h3>MY CYBER LAB</h3>
-
-        <p>
-          This portfolio and learning dashboard —
-          built with HTML, CSS and JavaScript.
-        </p>
-
-        <div class="tags">
-          <i>HTML</i>
-          <i>CSS</i>
-          <i>JS</i>
-          <i>GITHUB PAGES</i>
-        </div>
-
-      </div>
-
-      <b>LIVE ↗</b>
-
-    </article>
-
-
-    <article class="project reveal">
-
-      <span>P-002</span>
-
-      <div>
-
-        <h3>HOME SECURITY LAB</h3>
-
-        <p>
-          A virtual environment for Linux,
-          networking and defensive security practice.
-        </p>
-
-        <div class="tags">
-          <i>KALI</i>
-          <i>VM</i>
-          <i>LINUX</i>
-        </div>
-
-      </div>
-
-      <b class="muted">
-        IN PROGRESS
-      </b>
-
-    </article>
-
-
-    <article class="project reveal">
-
-      <span>P-003</span>
-
-      <div>
-
-        <h3>FUTURE PROJECTS</h3>
-
-        <p>
-          Write-ups, tools and experiments will land
-          here as I keep building.
-        </p>
-
-        <div class="tags">
-          <i>COMING SOON</i>
-        </div>
-
-      </div>
-
-      <b class="muted">
-        LOCKED
-      </b>
-
-    </article>
-
-  </div>
-
-</section>
-
-
-<!-- CONTACT -->
-
-<section class="section contact" id="contact">
-
-  <div class="contact-box reveal">
-
-    <span class="label">
-      FINAL TRANSMISSION
-    </span>
-
-    <h2>
-      KEEP<br>
-      <em>LEARNING.</em>
-    </h2>
-
-    <p>
-      Curiosity is the exploit.
-      Knowledge is the patch.
-    </p>
-
-    <div class="buttons">
-
-      <a class="btn primary" href="#home">
-        BACK TO TOP ↑
-      </a>
-
-      <a
-        class="btn secondary"
-        href="https://github.com/"
-        target="_blank">
-        GITHUB ↗
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<footer>
-
-  <span>
-    root@cyberlab:~$ exit
-  </span>
-
-  <p>
-    © 2026 VLAD // MY CYBER LAB
-  </p>
-
-  <small>
-    Built for learning • Authorized labs only
-  </small>
-
-</footer>
-
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
+```
