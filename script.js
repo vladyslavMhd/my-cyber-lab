@@ -1,222 +1,331 @@
-```javascript
-// ==========================================
-// MY CYBER LAB
-// Interactive JavaScript
-// ==========================================
+const $ = selector => document.querySelector(selector);
+const $$ = selector => document.querySelectorAll(selector);
+
+
+// LOADER
+
+window.addEventListener("load", () => {
+
+  const loader = $(".loader");
+  const bar = $(".loader-line i");
+
+  setTimeout(() => {
+    bar.style.width = "100%";
+  }, 100);
+
+  setTimeout(() => {
+    loader.classList.add("done");
+  }, 1900);
+
+});
 
 
 // MOBILE MENU
-const menuBtn = document.getElementById("menuBtn");
-const nav = document.querySelector("nav");
 
-menuBtn.addEventListener("click", () => {
-    nav.classList.toggle("active");
+const nav = $(".nav");
+const menu = $(".menu");
+
+menu.onclick = () => {
+  nav.classList.toggle("open");
+};
+
+$$(".nav nav a").forEach(link => {
+
+  link.onclick = () => {
+    nav.classList.remove("open");
+  };
+
 });
 
 
-// CLOSE MOBILE MENU AFTER CLICKING A LINK
-document.querySelectorAll("nav a").forEach(link => {
-    link.addEventListener("click", () => {
-        nav.classList.remove("active");
-    });
-});
+// TERMINAL TYPING
 
-
-// ==========================================
-// TERMINAL TYPING EFFECT
-// ==========================================
+const typed = $("#typed");
+const output = $("#termOutput");
 
 const commands = [
-    "neofetch",
-    "sudo nmap -sV localhost",
-    "cat /etc/os-release",
-    "whoami",
-    "echo 'Welcome to My Cyber Lab'"
+  "neofetch",
+  "whoami",
+  "cat about.txt",
+  "echo 'keep learning'",
+  "./start-lab.sh"
 ];
 
-const commandElement = document.getElementById("typedCommand");
-const outputElement = document.getElementById("terminalOutput");
-
 let commandIndex = 0;
-let charIndex = 0;
+let position = 0;
 let deleting = false;
 
-function typeCommand() {
+const outputs = {
 
-    const command = commands[commandIndex];
+  "neofetch": `
+    <p class="green">OS: Kali GNU/Linux Rolling</p>
+    <p>Shell: bash</p>
+    <p>Focus: cybersecurity</p>
+  `,
 
-    if (!deleting) {
+  "whoami": `
+    <p class="green">vlad // cybersecurity enthusiast</p>
+    <p class="muted">16 years old • learning every day</p>
+  `,
 
-        commandElement.textContent =
-            command.substring(0, charIndex + 1);
+  "cat about.txt": `
+    <p class="green">[+] Welcome to My Cyber Lab.</p>
+    <p class="muted">Build. Learn. Improve.</p>
+  `,
 
-        charIndex++;
+  "echo 'keep learning'": `
+    <p class="cyan">keep learning 🚀</p>
+  `,
 
-        if (charIndex === command.length) {
+  "./start-lab.sh": `
+    <p class="green">[ OK ] Starting authorized learning environment...</p>
+    <p class="cyan">Ready.</p>
+  `
 
-            deleting = true;
+};
 
-            setTimeout(() => {
 
-                showOutput(command);
+function typeTerminal(){
 
-            }, 700);
+  const command = commands[commandIndex];
 
-        } else {
+  if(!deleting){
 
-            setTimeout(typeCommand, 70);
+    typed.textContent = command.slice(0, position++);
+
+    if(position > command.length){
+
+      deleting = true;
+
+      output.innerHTML = outputs[command];
+
+      setTimeout(typeTerminal, 1100);
+
+    }else{
+
+      setTimeout(typeTerminal, 55);
+
+    }
+
+  }else{
+
+    typed.textContent = command.slice(0, --position);
+
+    if(position <= 0){
+
+      deleting = false;
+
+      commandIndex =
+        (commandIndex + 1) % commands.length;
+
+      setTimeout(typeTerminal, 250);
+
+    }else{
+
+      setTimeout(typeTerminal, 25);
+
+    }
+
+  }
+
+}
+
+typeTerminal();
+
+
+// PARTICLES
+
+const particles = $("#particles");
+
+for(let i = 0; i < 40; i++){
+
+  const particle = document.createElement("i");
+
+  particle.className = "particle";
+
+  particle.style.left =
+    Math.random() * 100 + "%";
+
+  particle.style.top =
+    85 + Math.random() * 30 + "%";
+
+  particle.style.animationDuration =
+    8 + Math.random() * 15 + "s";
+
+  particle.style.animationDelay =
+    Math.random() * 12 + "s";
+
+  particles.appendChild(particle);
+
+}
+
+
+// SCROLL REVEAL
+
+const revealObserver =
+  new IntersectionObserver(
+    entries => {
+
+      entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+          entry.target.classList.add("show");
 
         }
 
-    } else {
+      });
 
-        commandElement.textContent =
-            command.substring(0, charIndex - 1);
-
-        charIndex--;
-
-        if (charIndex === 0) {
-
-            deleting = false;
-
-            commandIndex++;
-
-            if (commandIndex >= commands.length) {
-                commandIndex = 0;
-            }
-
-            setTimeout(typeCommand, 300);
-
-        } else {
-
-            setTimeout(typeCommand, 35);
-
-        }
+    },
+    {
+      threshold: .12
     }
-}
+  );
 
 
-function showOutput(command) {
+$$(".reveal").forEach(element => {
 
-    let output = "";
-
-    if (command === "neofetch") {
-
-        output = `
-            <p class="green">OS: Kali GNU/Linux</p>
-            <p>Kernel: Linux</p>
-            <p>Shell: bash</p>
-            <p class="blue">Status: ONLINE</p>
-        `;
-
-    } else if (command.includes("nmap")) {
-
-        output = `
-            <p class="green">Starting Nmap...</p>
-            <p>Host is up.</p>
-            <p>PORT&nbsp;&nbsp;&nbsp;&nbsp;STATE&nbsp;&nbsp;SERVICE</p>
-            <p>22/tcp&nbsp;&nbsp;&nbsp;open&nbsp;&nbsp;&nbsp;ssh</p>
-            <p>80/tcp&nbsp;&nbsp;&nbsp;open&nbsp;&nbsp;&nbsp;http</p>
-        `;
-
-    } else if (command.includes("os-release")) {
-
-        output = `
-            <p class="green">PRETTY_NAME="Kali GNU/Linux Rolling"</p>
-        `;
-
-    } else if (command === "whoami") {
-
-        output = `
-            <p class="green">cybersecurity_student</p>
-        `;
-
-    } else {
-
-        output = `
-            <p class="green">Welcome to My Cyber Lab 🚀</p>
-        `;
-    }
-
-    outputElement.innerHTML = output;
-}
-
-
-typeCommand();
-
-
-// ==========================================
-// PARTICLE BACKGROUND
-// ==========================================
-
-const particleContainer = document.getElementById("particles");
-
-for (let i = 0; i < 45; i++) {
-
-    const particle = document.createElement("div");
-
-    particle.classList.add("particle");
-
-    particle.style.left =
-        Math.random() * 100 + "%";
-
-    particle.style.animationDuration =
-        (8 + Math.random() * 15) + "s";
-
-    particle.style.animationDelay =
-        Math.random() * 10 + "s";
-
-    particleContainer.appendChild(particle);
-}
-
-
-// ==========================================
-// CARD MOUSE GLOW
-// ==========================================
-
-const cards = document.querySelectorAll(".card");
-
-cards.forEach(card => {
-
-    card.addEventListener("mousemove", event => {
-
-        const rect = card.getBoundingClientRect();
-
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-
-        card.style.background = `
-            radial-gradient(
-                circle at ${x}px ${y}px,
-                rgba(0,255,136,.08),
-                #0b1113 55%
-            )
-        `;
-    });
-
-    card.addEventListener("mouseleave", () => {
-        card.style.background = "#0b1113";
-    });
+  revealObserver.observe(element);
 
 });
 
 
-// ==========================================
-// CONSOLE EASTER EGG
-// ==========================================
+// NUMBER COUNTERS
 
-console.log(
-    "%c MY CYBER LAB ",
-    "background:#00ff88;color:#001b0d;font-size:20px;font-weight:bold;padding:8px;"
-);
+const counters =
+  $$(".stats b[data-count]");
 
-console.log(
-    "%c Welcome, hacker 👾 ",
-    "color:#00ff88;font-size:14px;"
-);
+const counterObserver =
+  new IntersectionObserver(
+    entries => {
 
-console.log(
-    "%c Everything here is for legal learning and authorized labs.",
-    "color:#71847c;"
-);
-```
+      entries.forEach(entry => {
+
+        if(
+          entry.isIntersecting &&
+          !entry.target.dataset.done
+        ){
+
+          entry.target.dataset.done = "true";
+
+          const target =
+            Number(entry.target.dataset.count);
+
+          let current = 0;
+
+          const interval =
+            setInterval(() => {
+
+              current++;
+
+              entry.target.textContent =
+                current;
+
+              if(current >= target){
+
+                clearInterval(interval);
+
+              }
+
+            }, 70);
+
+        }
+
+      });
+
+    }
+  );
+
+
+counters.forEach(counter => {
+
+  counterObserver.observe(counter);
+
+});
+
+
+// CUSTOM CURSOR
+
+const cursor = $(".cursor");
+const cursorDot = $(".cursor-dot");
+
+window.addEventListener("mousemove", event => {
+
+  cursor.style.left =
+    event.clientX + "px";
+
+  cursor.style.top =
+    event.clientY + "px";
+
+  cursorDot.style.left =
+    event.clientX + "px";
+
+  cursorDot.style.top =
+    event.clientY + "px";
+
+});
+
+
+$$("a, button, .lab-card, .tool")
+.forEach(element => {
+
+  element.addEventListener("mouseenter", () => {
+
+    cursor.style.width = "45px";
+    cursor.style.height = "45px";
+
+  });
+
+  element.addEventListener("mouseleave", () => {
+
+    cursor.style.width = "28px";
+    cursor.style.height = "28px";
+
+  });
+
+});
+
+
+// SMOOTH ACTIVE NAV
+
+const sections = $$("section[id]");
+
+const sectionObserver =
+  new IntersectionObserver(
+    entries => {
+
+      entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+          $$(".nav nav a").forEach(link => {
+
+            link.classList.remove("active");
+
+            if(
+              link.getAttribute("href") ===
+              "#" + entry.target.id
+            ){
+
+              link.classList.add("active");
+
+            }
+
+          });
+
+        }
+
+      });
+
+    },
+    {
+      threshold: .45
+    }
+  );
+
+
+sections.forEach(section => {
+
+  sectionObserver.observe(section);
+
+});
