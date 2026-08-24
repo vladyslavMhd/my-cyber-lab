@@ -1,221 +1,324 @@
-// ==========================================
+// ========================================
 // MY CYBER LAB
 // Interactive JavaScript
-// ==========================================
+// ========================================
 
 
 // MOBILE MENU
-const menuBtn = document.getElementById("menuBtn");
-const nav = document.querySelector("nav");
 
-menuBtn.addEventListener("click", () => {
-    nav.classList.toggle("active");
+const menu = document.getElementById("menu");
+const nav = document.querySelector(".nav");
+
+menu.addEventListener("click", () => {
+    nav.classList.toggle("open");
 });
 
 
-// CLOSE MOBILE MENU AFTER CLICKING A LINK
-document.querySelectorAll("nav a").forEach(link => {
-    link.addEventListener("click", () => {
-        nav.classList.remove("active");
+document
+    .querySelectorAll("#navLinks a")
+    .forEach(link => {
+
+        link.addEventListener("click", () => {
+            nav.classList.remove("open");
+        });
+
     });
-});
 
 
-// ==========================================
-// TERMINAL TYPING EFFECT
-// ==========================================
+// ========================================
+// TERMINAL TYPING
+// ========================================
 
 const commands = [
     "neofetch",
-    "sudo nmap -sV localhost",
-    "cat /etc/os-release",
     "whoami",
-    "echo 'Welcome to My Cyber Lab'"
+    "cat about.txt",
+    "echo 'keep learning'",
+    "./start-lab.sh"
 ];
 
-const commandElement = document.getElementById("typedCommand");
-const outputElement = document.getElementById("terminalOutput");
+const typed = document.getElementById("typed");
+const output = document.getElementById("terminalOut");
 
 let commandIndex = 0;
-let charIndex = 0;
+let position = 0;
 let deleting = false;
+
 
 function typeCommand() {
 
-    const command = commands[commandIndex];
+    const command =
+        commands[commandIndex];
+
 
     if (!deleting) {
 
-        commandElement.textContent =
-            command.substring(0, charIndex + 1);
+        typed.textContent =
+            command.slice(0, position);
 
-        charIndex++;
+        position++;
 
-        if (charIndex === command.length) {
+
+        if (position > command.length) {
 
             deleting = true;
 
-            setTimeout(() => {
+            showOutput(command);
 
-                showOutput(command);
-
-            }, 700);
+            setTimeout(
+                typeCommand,
+                1200
+            );
 
         } else {
 
-            setTimeout(typeCommand, 70);
+            setTimeout(
+                typeCommand,
+                65
+            );
 
         }
 
     } else {
 
-        commandElement.textContent =
-            command.substring(0, charIndex - 1);
+        position--;
 
-        charIndex--;
+        typed.textContent =
+            command.slice(0, position);
 
-        if (charIndex === 0) {
+
+        if (position === 0) {
 
             deleting = false;
 
-            commandIndex++;
+            commandIndex =
+                (commandIndex + 1)
+                % commands.length;
 
-            if (commandIndex >= commands.length) {
-                commandIndex = 0;
-            }
-
-            setTimeout(typeCommand, 300);
+            setTimeout(
+                typeCommand,
+                250
+            );
 
         } else {
 
-            setTimeout(typeCommand, 35);
+            setTimeout(
+                typeCommand,
+                28
+            );
 
         }
+
     }
+
 }
 
 
 function showOutput(command) {
 
-    let output = "";
+    const outputs = {
 
-    if (command === "neofetch") {
+        "neofetch": `
+            <p class="g">
+                OS: Kali GNU/Linux Rolling
+            </p>
 
-        output = `
-            <p class="green">OS: Kali GNU/Linux</p>
-            <p>Kernel: Linux</p>
-            <p>Shell: bash</p>
-            <p class="blue">Status: ONLINE</p>
-        `;
+            <p>
+                Shell: bash
+            </p>
 
-    } else if (command.includes("nmap")) {
+            <p>
+                Focus: cybersecurity
+            </p>
+        `,
 
-        output = `
-            <p class="green">Starting Nmap...</p>
-            <p>Host is up.</p>
-            <p>PORT&nbsp;&nbsp;&nbsp;&nbsp;STATE&nbsp;&nbsp;SERVICE</p>
-            <p>22/tcp&nbsp;&nbsp;&nbsp;open&nbsp;&nbsp;&nbsp;ssh</p>
-            <p>80/tcp&nbsp;&nbsp;&nbsp;open&nbsp;&nbsp;&nbsp;http</p>
-        `;
+        "whoami": `
+            <p class="g">
+                vlad // cybersecurity enthusiast
+            </p>
 
-    } else if (command.includes("os-release")) {
+            <p class="muted">
+                16 years old • learning every day
+            </p>
+        `,
 
-        output = `
-            <p class="green">PRETTY_NAME="Kali GNU/Linux Rolling"</p>
-        `;
+        "cat about.txt": `
+            <p class="g">
+                [+] Welcome to My Cyber Lab.
+            </p>
 
-    } else if (command === "whoami") {
+            <p class="muted">
+                Build. Break. Learn.
+            </p>
+        `,
 
-        output = `
-            <p class="green">cybersecurity_student</p>
-        `;
+        "echo 'keep learning'": `
+            <p class="cyan">
+                keep learning 🚀
+            </p>
+        `,
 
-    } else {
+        "./start-lab.sh": `
+            <p class="g">
+                [ OK ] Starting authorized learning environment...
+            </p>
 
-        output = `
-            <p class="green">Welcome to My Cyber Lab 🚀</p>
-        `;
-    }
+            <p class="cyan">
+                Ready.
+            </p>
+        `
 
-    outputElement.innerHTML = output;
+    };
+
+
+    output.innerHTML =
+        outputs[command] || "";
 }
 
 
 typeCommand();
 
 
-// ==========================================
-// PARTICLE BACKGROUND
-// ==========================================
+// ========================================
+// PARTICLES
+// ========================================
 
-const particleContainer = document.getElementById("particles");
+const particleContainer =
+    document.getElementById("particles");
+
 
 for (let i = 0; i < 45; i++) {
 
-    const particle = document.createElement("div");
+    const particle =
+        document.createElement("i");
 
-    particle.classList.add("particle");
+    particle.className =
+        "particle";
 
     particle.style.left =
         Math.random() * 100 + "%";
 
+    particle.style.top =
+        (80 + Math.random() * 40) + "%";
+
     particle.style.animationDuration =
-        (8 + Math.random() * 15) + "s";
+        (8 + Math.random() * 16) + "s";
 
     particle.style.animationDelay =
-        Math.random() * 10 + "s";
+        Math.random() * 12 + "s";
 
-    particleContainer.appendChild(particle);
+    particleContainer.appendChild(
+        particle
+    );
+
 }
 
 
-// ==========================================
-// CARD MOUSE GLOW
-// ==========================================
+// ========================================
+// SCROLL REVEAL
+// ========================================
 
-const cards = document.querySelectorAll(".card");
+const observer =
+    new IntersectionObserver(
+        entries => {
 
-cards.forEach(card => {
+            entries.forEach(
+                entry => {
 
-    card.addEventListener("mousemove", event => {
+                    if (
+                        entry.isIntersecting
+                    ) {
 
-        const rect = card.getBoundingClientRect();
+                        entry.target
+                            .classList
+                            .add("show");
 
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+                    }
 
-        card.style.background = `
-            radial-gradient(
-                circle at ${x}px ${y}px,
-                rgba(0,255,136,.08),
-                #0b1113 55%
-            )
-        `;
+                }
+            );
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(element => {
+
+        observer.observe(element);
+
     });
 
-    card.addEventListener("mouseleave", () => {
-        card.style.background = "#0b1113";
+
+// ========================================
+// LAB CARD MOUSE EFFECT
+// ========================================
+
+document
+    .querySelectorAll(".lab-card")
+    .forEach(card => {
+
+        card.addEventListener(
+            "mousemove",
+            event => {
+
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    event.clientX -
+                    rect.left;
+
+                const y =
+                    event.clientY -
+                    rect.top;
+
+
+                card.style.background = `
+                    radial-gradient(
+                        circle at ${x}px ${y}px,
+                        rgba(0,255,136,.09),
+                        #08100e 45%
+                    )
+                `;
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            () => {
+
+                card.style.background = "";
+
+            }
+        );
+
     });
 
-});
 
-
-// ==========================================
+// ========================================
 // CONSOLE EASTER EGG
-// ==========================================
+// ========================================
 
 console.log(
-    "%c MY CYBER LAB ",
-    "background:#00ff88;color:#001b0d;font-size:20px;font-weight:bold;padding:8px;"
+    "%c MY CYBER LAB // VLAD ",
+    `
+        background:#00ff88;
+        color:#00140b;
+        padding:8px;
+        font-weight:bold;
+        font-size:16px;
+    `
 );
 
 console.log(
-    "%c Welcome, hacker 👾 ",
-    "color:#00ff88;font-size:14px;"
-);
-
-console.log(
-    "%c Everything here is for legal learning and authorized labs.",
-    "color:#71847c;"
+    "%c Authorized learning only.",
+    "color:#00ff88;"
 );
 ```
