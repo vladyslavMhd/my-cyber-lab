@@ -1,1470 +1,1117 @@
+/*
+==================================================
+MY CYBER LAB v4.0
+==================================================
+
+Supabase:
+- URL: your project URL
+- Key: publishable/anon key ONLY
+
+NEVER put a service_role / secret key here.
+==================================================
+*/
+
+
 const SUPABASE_URL =
   "https://zmcngtcppgmxtngrvzon.supabase.co";
+
 
 const SUPABASE_KEY =
   "sb_publishable_6VIKlQsd9SxO5jEvm0wWCg_-wgdGLLo";
 
-const db =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
 
 
-// ==========================
-// TRANSLATIONS
-// ==========================
+/* ================================================
+   LABS
+================================================ */
 
-const translations = {
 
-  en: {
-    nav_about: "About",
-    nav_skills: "Skills",
-    nav_labs: "Labs",
-    nav_projects: "Projects",
-    nav_terminal: "Terminal",
-    nav_reviews: "Reviews",
+const labs = [
 
-    hero_status: "CYBERSECURITY / LEARNING / BUILDING",
-    hero_text: "Welcome to my personal cyber laboratory — a place where I learn cybersecurity, build projects and experiment with safe, legal security challenges.",
-    hero_labs: "Explore Labs →",
-    hero_about: "About Me",
-    age: "YEARS OLD",
-    labs_done: "LABS DONE",
-    level: "CYBER LEVEL",
-
-    system_online: "SYSTEM ONLINE",
-    completed: "COMPLETED",
-    streak: "DAY STREAK",
-
-    builder: "builder.",
-    about_1: "I'm Vlad, I'm 16, and I'm really into cybersecurity.",
-    about_2: "I like learning how systems work, practicing in controlled environments, using Linux and building projects that help me understand security better.",
-    about_3: "This website is my personal cyber corner — a portfolio, learning space and laboratory.",
-
-    labs_description: "Safe browser-based mini labs. Everything runs locally in your browser."
+  {
+    id: "web",
+    icon: "🌐",
+    title: "Web Security Basics",
+    desc: "Learn the foundations of HTTP, cookies, headers and common web-security concepts.",
+    xp: 100,
+    diff: "Beginner"
   },
 
-  nl: {
-    nav_about: "Over mij",
-    nav_skills: "Vaardigheden",
-    nav_labs: "Labs",
-    nav_projects: "Projecten",
-    nav_terminal: "Terminal",
-    nav_reviews: "Reviews",
-
-    hero_status: "CYBERSECURITY / LEREN / BOUWEN",
-    hero_text: "Welkom in mijn persoonlijke cyberlaboratorium — een plek waar ik cybersecurity leer, projecten bouw en veilig experimenteer met security-uitdagingen.",
-    hero_labs: "Bekijk Labs →",
-    hero_about: "Over mij",
-    age: "JAAR OUD",
-    labs_done: "LABS GEDAAN",
-    level: "CYBER LEVEL",
-
-    system_online: "SYSTEEM ONLINE",
-    completed: "VOLTOOID",
-    streak: "DAGENREeks",
-
-    builder: "bouwer.",
-    about_1: "Ik ben Vlad, ik ben 16 jaar oud en ik ben erg geïnteresseerd in cybersecurity.",
-    about_2: "Ik leer graag hoe systemen werken, oefen in gecontroleerde omgevingen, gebruik Linux en bouw projecten om security beter te begrijpen.",
-    about_3: "Deze website is mijn persoonlijke cyberplek — een portfolio, leeromgeving en laboratorium.",
-
-    labs_description: "Veilige browserlabs. Alles draait lokaal in je browser."
+  {
+    id: "linux",
+    icon: "🐧",
+    title: "Linux Fundamentals",
+    desc: "Practice safe command-line navigation, permissions and process inspection.",
+    xp: 120,
+    diff: "Beginner"
   },
 
-  ua: {
-    nav_about: "Про мене",
-    nav_skills: "Навички",
-    nav_labs: "Лабораторії",
-    nav_projects: "Проєкти",
-    nav_terminal: "Термінал",
-    nav_reviews: "Відгуки",
+  {
+    id: "network",
+    icon: "📡",
+    title: "Networking Basics",
+    desc: "Understand IP addresses, ports, DNS and how packets move between systems.",
+    xp: 130,
+    diff: "Beginner"
+  },
 
-    hero_status: "КІБЕРБЕЗПЕКА / НАВЧАННЯ / РОЗРОБКА",
-    hero_text: "Ласкаво просимо до моєї особистої кіберлабораторії — місця, де я вивчаю кібербезпеку, створюю проєкти та безпечно експериментую.",
-    hero_labs: "Відкрити Labs →",
-    hero_about: "Про мене",
-    age: "РОКІВ",
-    labs_done: "ЛАБ ПРОЙДЕНО",
-    level: "КІБЕР РІВЕНЬ",
+  {
+    id: "crypto",
+    icon: "🔐",
+    title: "Cryptography",
+    desc: "Explore hashing, encryption, keys and secure password storage.",
+    xp: 150,
+    diff: "Intermediate"
+  },
 
-    system_online: "СИСТЕМА ONLINE",
-    completed: "ВИКОНАНО",
-    streak: "ДНІВ СЕРІЇ",
+  {
+    id: "osint",
+    icon: "🔎",
+    title: "OSINT Basics",
+    desc: "Learn ethical open-source research and how to evaluate information responsibly.",
+    xp: 140,
+    diff: "Intermediate"
+  },
 
-    builder: "розробника.",
-    about_1: "Я Влад, мені 16 років, і я дуже цікавлюся кібербезпекою.",
-    about_2: "Мені подобається вивчати роботу систем, практикуватися в контрольованих середовищах, використовувати Linux та створювати власні проєкти.",
-    about_3: "Цей сайт — мій особистий кіберпростір, портфоліо та лабораторія.",
-
-    labs_description: "Безпечні лабораторії, які працюють прямо у твоєму браузері."
+  {
+    id: "ctf",
+    icon: "🏴‍☠️",
+    title: "CTF Starter",
+    desc: "Solve beginner-friendly security puzzles in a controlled learning environment.",
+    xp: 180,
+    diff: "Intermediate"
   }
 
-};
+];
 
 
-let currentLanguage =
-  localStorage.getItem("cyber-language") || "en";
+
+/* ================================================
+   ACHIEVEMENTS
+================================================ */
 
 
-function applyLanguage(language) {
+const achievements = [
 
-  currentLanguage =
-    language;
+  [
+    "first",
+    "🚀",
+    "First Lab",
+    state => state.completed.length >= 1
+  ],
 
-  localStorage.setItem(
-    "cyber-language",
-    language
+  [
+    "three",
+    "🧪",
+    "3 Labs",
+    state => state.completed.length >= 3
+  ],
+
+  [
+    "xp500",
+    "⚡",
+    "500 XP",
+    state => state.xp >= 500
+  ],
+
+  [
+    "daily",
+    "🧠",
+    "Daily Solver",
+    state => state.daily
+  ],
+
+  [
+    "all",
+    "🏆",
+    "Lab Master",
+    state => state.completed.length >= labs.length
+  ]
+
+];
+
+
+
+/* ================================================
+   SKILLS
+================================================ */
+
+
+const skills = [
+
+  ["Linux", 82],
+
+  ["Networking", 74],
+
+  ["Web Security", 76],
+
+  ["Python", 68],
+
+  ["CTF", 61],
+
+  ["Cyber Fundamentals", 88]
+
+];
+
+
+
+/* ================================================
+   STATE
+================================================ */
+
+
+let state =
+  JSON.parse(
+    localStorage.getItem("mcl_state") || "null"
   );
 
-  document.documentElement.lang =
-    language;
 
-  document.querySelectorAll(
-    "[data-i18n]"
-  ).forEach(element => {
+if (!state) {
 
-    const key =
-      element.dataset.i18n;
+  state = {
 
-    if (
-      translations[language] &&
-      translations[language][key]
-    ) {
+    xp: 0,
 
-      element.textContent =
-        translations[language][key];
+    completed: [],
 
-    }
+    daily: false
 
-  });
+  };
 
-  document.querySelector("#language").value =
-    language;
 }
 
-
-// ==========================
-// STATE
-// ==========================
-
-let completedLabs =
-  Number(
-    localStorage.getItem(
-      "cyber-labs"
-    ) || 0
-  );
 
 let selectedRating = 0;
 
 
-// ==========================
-// INIT
-// ==========================
 
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
+/* ================================================
+   HELPERS
+================================================ */
 
-    applyLanguage(
-      currentLanguage
-    );
 
-    initReveal();
-    initCursor();
-    initTheme();
-    initMobileMenu();
-    initParticles();
-    initLabs();
-    initReviews();
-    initTerminal();
-    updateDashboard();
+const $ = selector =>
+  document.querySelector(selector);
 
-  }
-);
 
+const $$ = selector =>
+  [...document.querySelectorAll(selector)];
 
-// ==========================
-// LANGUAGE
-// ==========================
 
-document.querySelector("#language")
-  .addEventListener(
-    "change",
-    event => {
 
-      applyLanguage(
-        event.target.value
-      );
-
-    }
-  );
-
-
-// ==========================
-// THEME
-// ==========================
-
-function initTheme() {
-
-  const saved =
-    localStorage.getItem(
-      "cyber-theme"
-    ) || "dark";
-
-  document.body.dataset.theme =
-    saved;
-
-  $("#themeBtn").textContent =
-    saved === "light"
-      ? "☀"
-      : "☾";
-
-
-  $("#themeBtn").onclick =
-    () => {
-
-      const newTheme =
-        document.body.dataset.theme === "light"
-          ? "dark"
-          : "light";
-
-      document.body.dataset.theme =
-        newTheme;
-
-      localStorage.setItem(
-        "cyber-theme",
-        newTheme
-      );
-
-      $("#themeBtn").textContent =
-        newTheme === "light"
-          ? "☀"
-          : "☾";
-
-    };
-
-}
-
-
-// ==========================
-// MOBILE
-// ==========================
-
-function initMobileMenu() {
-
-  $("#mobileMenu").onclick =
-    () => {
-
-      $("#mobileNav")
-        .classList
-        .toggle("open");
-
-    };
-
-
-  $$("#mobileNav a")
-    .forEach(link => {
-
-      link.onclick =
-        () => {
-
-          $("#mobileNav")
-            .classList
-            .remove("open");
-
-        };
-
-    });
-
-}
-
-
-// ==========================
-// REVEAL
-// ==========================
-
-function initReveal() {
-
-  const observer =
-    new IntersectionObserver(
-      entries => {
-
-        entries.forEach(
-          entry => {
-
-            if (
-              entry.isIntersecting
-            ) {
-
-              entry.target
-                .classList
-                .add("visible");
-
-            }
-
-          }
-        );
-
-      },
-      {
-        threshold: .08
-      }
-    );
-
-
-  $$(".reveal")
-    .forEach(
-      el =>
-        observer.observe(el)
-    );
-
-}
-
-
-// ==========================
-// CURSOR
-// ==========================
-
-function initCursor() {
-
-  const glow =
-    $(".cursor-glow");
-
-
-  window.addEventListener(
-    "pointermove",
-    event => {
-
-      glow.style.left =
-        `${event.clientX}px`;
-
-      glow.style.top =
-        `${event.clientY}px`;
-
-    }
-  );
-
-}
-
-
-// ==========================
-// PARTICLES
-// ==========================
-
-function initParticles() {
-
-  const container =
-    $("#particles");
-
-
-  for (
-    let i = 0;
-    i < 25;
-    i++
-  ) {
-
-    const particle =
-      document.createElement(
-        "span"
-      );
-
-    particle.className =
-      "particle";
-
-    particle.style.left =
-      Math.random() * 100 + "%";
-
-    particle.style.animationDelay =
-      Math.random() * 10 + "s";
-
-    particle.style.animationDuration =
-      7 + Math.random() * 10 + "s";
-
-    container.appendChild(
-      particle
-    );
-
-  }
-
-}
-
-
-// ==========================
-// DASHBOARD
-// ==========================
-
-function updateDashboard() {
-
-  const xp =
-    completedLabs * 10;
-
-  const level =
-    Math.floor(
-      xp / 100
-    ) + 1;
-
-  const levelXP =
-    xp % 100;
-
-
-  $("#dashLabs")
-    .textContent =
-    completedLabs;
-
-  $("#heroLabs")
-    .textContent =
-    completedLabs;
-
-  $("#heroLevel")
-    .textContent =
-    String(level)
-      .padStart(2, "0");
-
-  $("#levelText")
-    .textContent =
-    `LVL ${String(level).padStart(2, "0")}`;
-
-  $("#xpText")
-    .textContent =
-    `${levelXP} / 100 XP`;
-
-  $("#xpFill")
-    .style.width =
-    levelXP + "%";
-
-}
-
-
-// ==========================
-// LABS
-// ==========================
-
-const labTitles = {
-
-  password: "Password Strength",
-  base64: "Base64 Lab",
-  caesar: "Caesar Cipher",
-  hash: "SHA-256 Hash",
-  jwt: "JWT Decoder",
-  url: "URL Analyzer",
-  regex: "Regex Playground",
-  binary: "Binary / Hex",
-  xss: "XSS Awareness",
-  headers: "HTTP Headers"
-
-};
-
-
-function initLabs() {
-
-  $$(".lab-btn")
-    .forEach(button => {
-
-      button.onclick =
-        () =>
-          openLab(
-            button.dataset.lab
-          );
-
-    });
-
-
-  $("#closeModal").onclick =
-    closeLab;
-
-
-  $("#labModal").onclick =
-    event => {
-
-      if (
-        event.target.id ===
-        "labModal"
-      )
-        closeLab();
-
-    };
-
-}
-
-
-function openLab(type) {
-
-  const content =
-    $("#modalContent");
-
-
-  const builders = {
-
-    password:
-      passwordLab,
-
-    base64:
-      base64Lab,
-
-    caesar:
-      caesarLab,
-
-    hash:
-      hashLab,
-
-    jwt:
-      jwtLab,
-
-    url:
-      urlLab,
-
-    regex:
-      regexLab,
-
-    binary:
-      binaryLab,
-
-    xss:
-      xssLab,
-
-    headers:
-      headersLab
-
-  };
-
-
-  content.innerHTML =
-    `<h2 class="modal-title">
-      ${labTitles[type]}
-    </h2>
-    <p class="modal-sub">
-      Safe educational browser laboratory.
-    </p>
-    ${builders[type]()}`;
-
-
-  $("#labModal")
-    .classList
-    .add("open");
-
-
-  $("#labModal")
-    .setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-
-  bindLab(type);
-
-}
-
-
-function closeLab() {
-
-  $("#labModal")
-    .classList
-    .remove("open");
-
-}
-
-
-// ==========================
-// LAB UI
-// ==========================
-
-function input(
-  id,
-  placeholder,
-  type = "text"
-) {
-
-  return `
-    <input
-      id="${id}"
-      class="lab-input"
-      type="${type}"
-      placeholder="${placeholder}">
-  `;
-
-}
-
-
-function output() {
-
-  return `
-    <div id="labOutput"
-         class="lab-output">
-      Waiting for input...
-    </div>
-  `;
-
-}
-
-
-function buttons(
-  buttonsHTML
-) {
-
-  return `
-    <div class="modal-actions">
-      ${buttonsHTML}
-    </div>
-  `;
-
-}
-
-
-// ==========================
-// PASSWORD
-// ==========================
-
-function passwordLab() {
-
-  return `
-    ${input(
-      "labInput",
-      "Type a test password...",
-      "password"
-    )}
-
-    ${output()}
-  `;
-
-}
-
-
-// ==========================
-// BASE64
-// ==========================
-
-function base64Lab() {
-
-  return `
-    <textarea
-      id="labInput"
-      class="lab-input"
-      placeholder="Text..."></textarea>
-
-    ${buttons(`
-      <button id="encodeBtn">ENCODE</button>
-      <button id="decodeBtn" class="alt">DECODE</button>
-    `)}
-
-    ${output()}
-  `;
-
-}
-
-
-// ==========================
-// CAESAR
-// ==========================
-
-function caesarLab() {
-
-  return `
-    ${input(
-      "labInput",
-      "HELLO WORLD"
-    )}
-
-    ${input(
-      "shiftInput",
-      "Shift",
-      "number"
-    )}
-
-    ${buttons(`
-      <button id="encryptBtn">SHIFT TEXT</button>
-    `)}
-
-    ${output()}
-  `;
-
-}
-
-
-// ==========================
-// HASH
-// ==========================
-
-function hashLab() {
-
-  return `
-    ${input(
-      "labInput",
-      "Text to hash..."
-    )}
-
-    ${buttons(`
-      <button id="hashBtn">HASH</button>
-    `)}
-
-    ${output()}
-  `;
-
-}
-
-
-// ==========================
-// JWT
-// ==========================
-
-function jwtLab() {
-
-  return `
-    ${input(
-      "labInput",
-      "Paste JWT..."
-    )}
-
-    ${buttons(`
-      <button id="jwtBtn">DECODE</button>
-    `)}
-
-    ${output()}
-  `;
-
-}
-
-
-// ==========================
-// URL
-// ==========================
-
-function urlLab() {
-
-  return `
-    ${input(
-      "labInput",
-      "https://example.com/path?x=1"
-    )}
-
-    ${buttons(`
-      <button id="urlBtn">ANALYZE</button>
-    `)}
-
-    ${output()}
-  `;
-
-}
-
-
-// ==========================
-// REGEX
-// ==========================
-
-function regexLab() {
-
-  return `
-    ${input(
-      "regexInput",
-      "Regex e.g. ^hello"
-    )}
-
-    ${input(
-      "labInput",
-      "Text to test..."
-    )}
-
-    ${buttons(`
-      <button id="regexBtn">TEST</button>
-    `)}
-
-    ${output()}
-  `;
-
-}
-
-
-// ==========================
-// BINARY
-// ==========================
-
-function binaryLab() {
-
-  return `
-    ${input(
-      "labInput",
-      "Hello"
-    )}
-
-    ${buttons(`
-      <button id="binaryBtn">CONVERT</button>
-    `)}
-
-    ${output()}
-  `;
-
-}
-
-
-// ==========================
-// XSS AWARENESS
-// ==========================
-
-function xssLab() {
-
-  return `
-    ${input(
-      "labInput",
-      "<script>alert('test')</script>"
-    )}
-
-    ${buttons(`
-      <button id="xssBtn">SAFE PREVIEW</button>
-    `)}
-
-    ${output()}
-  `;
-
-}
-
-
-// ==========================
-// HEADERS
-// ==========================
-
-function headersLab() {
-
-  return `
-    <select id="headerSelect" class="lab-input">
-      <option>Content-Security-Policy</option>
-      <option>Strict-Transport-Security</option>
-      <option>X-Content-Type-Options</option>
-      <option>Referrer-Policy</option>
-      <option>Permissions-Policy</option>
-    </select>
-
-    ${buttons(`
-      <button id="headerBtn">EXPLAIN</button>
-    `)}
-
-    ${output()}
-  `;
-
-}
-
-
-// ==========================
-// LAB BINDINGS
-// ==========================
-
-function bindLab(type) {
-
-  if (
-    type === "password"
-  ) {
-
-    $("#labInput").oninput =
-      passwordStrength;
-
-  }
-
-
-  if (
-    type === "base64"
-  ) {
-
-    $("#encodeBtn").onclick =
-      () => {
-
-        try {
-
-          $("#labOutput")
-            .textContent =
-            btoa(
-              unescape(
-                encodeURIComponent(
-                  $("#labInput").value
-                )
-              )
-            );
-
-          completed();
-
-        } catch {
-
-          $("#labOutput")
-            .textContent =
-            "Encoding error.";
-
-        }
-
-      };
-
-
-    $("#decodeBtn").onclick =
-      () => {
-
-        try {
-
-          $("#labOutput")
-            .textContent =
-            decodeURIComponent(
-              escape(
-                atob(
-                  $("#labInput").value
-                )
-              )
-            );
-
-          completed();
-
-        } catch {
-
-          $("#labOutput")
-            .textContent =
-            "Invalid Base64.";
-
-        }
-
-      };
-
-  }
-
-
-  if (
-    type === "caesar"
-  ) {
-
-    $("#encryptBtn").onclick =
-      () => {
-
-        $("#labOutput")
-          .textContent =
-          caesar(
-            $("#labInput").value,
-            Number(
-              $("#shiftInput").value || 3
-            )
-          );
-
-        completed();
-
-      };
-
-  }
-
-
-  if (
-    type === "hash"
-  ) {
-
-    $("#hashBtn").onclick =
-      async () => {
-
-        const bytes =
-          new TextEncoder()
-            .encode(
-              $("#labInput").value
-            );
-
-
-        const hash =
-          await crypto.subtle.digest(
-            "SHA-256",
-            bytes
-          );
-
-
-        $("#labOutput")
-          .textContent =
-          [...new Uint8Array(hash)]
-            .map(
-              x =>
-                x
-                  .toString(16)
-                  .padStart(2, "0")
-            )
-            .join("");
-
-        completed();
-
-      };
-
-  }
-
-
-  if (
-    type === "jwt"
-  ) {
-
-    $("#jwtBtn").onclick =
-      () => {
-
-        try {
-
-          const parts =
-            $("#labInput")
-              .value
-              .split(".");
-
-          if (
-            parts.length !== 3
-          )
-            throw new Error(
-              "JWT must contain 3 parts."
-            );
-
-
-          const header =
-            JSON.parse(
-              decodeBase64URL(
-                parts[0]
-              )
-            );
-
-
-          const payload =
-            JSON.parse(
-              decodeBase64URL(
-                parts[1]
-              )
-            );
-
-
-          $("#labOutput")
-            .textContent =
-            JSON.stringify(
-              {
-                header,
-                payload
-              },
-              null,
-              2
-            );
-
-          completed();
-
-        } catch(error) {
-
-          $("#labOutput")
-            .textContent =
-            "Invalid JWT: " +
-            error.message;
-
-        }
-
-      };
-
-  }
-
-
-  if (
-    type === "url"
-  ) {
-
-    $("#urlBtn").onclick =
-      () => {
-
-        try {
-
-          const u =
-            new URL(
-              $("#labInput").value
-            );
-
-
-          $("#labOutput")
-            .textContent =
-            [
-              `Protocol: ${u.protocol}`,
-              `Host: ${u.host}`,
-              `Hostname: ${u.hostname}`,
-              `Port: ${u.port || "default"}`,
-              `Path: ${u.pathname}`,
-              `Query: ${u.search || "none"}`
-            ].join("\n");
-
-          completed();
-
-        } catch {
-
-          $("#labOutput")
-            .textContent =
-            "Invalid URL.";
-
-        }
-
-      };
-
-  }
-
-
-  if (
-    type === "regex"
-  ) {
-
-    $("#regexBtn").onclick =
-      () => {
-
-        try {
-
-          const regex =
-            new RegExp(
-              $("#regexInput").value
-            );
-
-          const text =
-            $("#labInput").value;
-
-          const match =
-            regex.test(text);
-
-          $("#labOutput")
-            .textContent =
-            match
-              ? "MATCH ✓"
-              : "NO MATCH ✕";
-
-          completed();
-
-        } catch {
-
-          $("#labOutput")
-            .textContent =
-            "Invalid regular expression.";
-
-        }
-
-      };
-
-  }
-
-
-  if (
-    type === "binary"
-  ) {
-
-    $("#binaryBtn").onclick =
-      () => {
-
-        const text =
-          $("#labInput").value;
-
-        const binary =
-          [...text]
-            .map(
-              char =>
-                char
-                  .charCodeAt(0)
-                  .toString(2)
-                  .padStart(8, "0")
-            )
-            .join(" ");
-
-        const hex =
-          [...text]
-            .map(
-              char =>
-                char
-                  .charCodeAt(0)
-                  .toString(16)
-                  .padStart(2, "0")
-            )
-            .join(" ");
-
-        $("#labOutput")
-          .textContent =
-          `BINARY:\n${binary}\n\nHEX:\n${hex}`;
-
-        completed();
-
-      };
-
-  }
-
-
-  if (
-    type === "xss"
-  ) {
-
-    $("#xssBtn").onclick =
-      () => {
-
-        const text =
-          $("#labInput").value;
-
-        $("#labOutput")
-          .textContent =
-          `SAFE TEXT PREVIEW:\n\n${text}\n\n`
-          +
-          "Notice: the input was rendered as text, not HTML.";
-
-        completed();
-
-      };
-
-  }
-
-
-  if (
-    type === "headers"
-  ) {
-
-    $("#headerBtn").onclick =
-      () => {
-
-        const explanations = {
-
-          "Content-Security-Policy":
-            "Controls which resources a browser is allowed to load.",
-
-          "Strict-Transport-Security":
-            "Tells browsers to use HTTPS for the site.",
-
-          "X-Content-Type-Options":
-            "Helps prevent MIME type sniffing.",
-
-          "Referrer-Policy":
-            "Controls how much referrer information browsers send.",
-
-          "Permissions-Policy":
-            "Controls access to browser features such as camera or microphone."
-
-        };
-
-
-        const key =
-          $("#headerSelect").value;
-
-
-        $("#labOutput")
-          .textContent =
-          explanations[key];
-
-        completed();
-
-      };
-
-  }
-
-}
-
-
-// ==========================
-// LAB HELPERS
-// ==========================
-
-function completed() {
-
-  completedLabs++;
+function save() {
 
   localStorage.setItem(
-    "cyber-labs",
-    completedLabs
+    "mcl_state",
+    JSON.stringify(state)
   );
 
-  updateDashboard();
+  renderDashboard();
 
-  toast(
-    "+10 XP ⚡"
+}
+
+
+
+function toast(message) {
+
+  const element = $("#toast");
+
+  element.textContent = message;
+
+  element.classList.add("show");
+
+  setTimeout(() => {
+
+    element.classList.remove("show");
+
+  }, 2400);
+
+}
+
+
+
+function escapeHtml(value) {
+
+  return String(value).replace(
+    /[&<>"']/g,
+
+    char => ({
+
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+
+    })[char]
+
   );
 
 }
 
 
-function passwordStrength(event) {
 
-  const p =
-    event.target.value;
-
-  let score = 0;
-
-  if (p.length >= 8) score++;
-  if (p.length >= 12) score++;
-  if (/[a-z]/.test(p) && /[A-Z]/.test(p)) score++;
-  if (/\d/.test(p)) score++;
-  if (/[^A-Za-z0-9]/.test(p)) score++;
-
-  const labels = [
-    "Very weak",
-    "Weak",
-    "Fair",
-    "Good",
-    "Strong",
-    "Very strong"
-  ];
-
-  $("#labOutput")
-    .textContent =
-    p
-      ? `${labels[score]} (${score}/5)`
-      : "Waiting for input...";
-
-}
+/* ================================================
+   LABS
+================================================ */
 
 
-function caesar(
-  text,
-  shift
-) {
+function renderLabs() {
 
-  return [...text]
-    .map(char => {
+  $("#labGrid").innerHTML =
+    labs.map(lab => `
 
-      const code =
-        char.charCodeAt(0);
+      <article class="lab-card reveal visible">
 
-      let base;
+        <div class="lab-icon">
+          ${lab.icon}
+        </div>
 
-      if (
-        code >= 65 &&
-        code <= 90
-      )
-        base = 65;
+        <h3>
+          ${lab.title}
+        </h3>
 
-      else if (
-        code >= 97 &&
-        code <= 122
-      )
-        base = 97;
+        <p>
+          ${lab.desc}
+        </p>
 
-      else
-        return char;
+        <div class="lab-meta">
 
-      return String.fromCharCode(
-        (
-          code -
-          base +
-          shift +
-          26
-        ) % 26 + base
+          <span class="difficulty">
+            ${lab.diff}
+          </span>
+
+          <span>
+            +${lab.xp} XP
+          </span>
+
+          <button
+            class="lab-btn"
+            data-lab="${lab.id}">
+
+            ${
+              state.completed.includes(lab.id)
+                ? "Completed ✓"
+                : "Start Lab →"
+            }
+
+          </button>
+
+        </div>
+
+      </article>
+
+    `).join("");
+
+
+  $$(".lab-btn").forEach(button => {
+
+    button.onclick = () => {
+
+      completeLab(
+        button.dataset.lab
       );
 
-    })
-    .join("");
+    };
+
+  });
 
 }
 
 
-function decodeBase64URL(value) {
 
-  value =
-    value
-      .replace(/-/g, "+")
-      .replace(/_/g, "/");
+function completeLab(id) {
 
-  while (
-    value.length % 4
-  )
-    value += "=";
-
-  return decodeURIComponent(
-    escape(
-      atob(value)
-    )
-  );
-
-}
+  const lab =
+    labs.find(item => item.id === id);
 
 
-// ==========================
-// TERMINAL
-// ==========================
-
-function initTerminal() {
-
-  $("#terminalInput")
-    .addEventListener(
-      "keydown",
-      event => {
-
-        if (
-          event.key !== "Enter"
-        )
-          return;
-
-        const command =
-          event.target.value
-            .trim()
-            .toLowerCase();
-
-        event.target.value = "";
-
-        runCommand(command);
-
-      }
-    );
-
-}
-
-
-function runCommand(command) {
-
-  const output =
-    $("#terminalOutput");
-
-
-  const line =
-    document.createElement(
-      "p"
-    );
-
-  line.innerHTML =
-    `<span class="green">
-      vlad@cyberlab:~$
-    </span> ${escapeHTML(command)}`;
-
-  output.appendChild(
-    line
-  );
-
-
-  const responses = {
-
-    help:
-      "Commands: help, about, skills, labs, projects, whoami, clear",
-
-    whoami:
-      "vlad — 16-year-old cybersecurity learner.",
-
-    about:
-      "Learning cybersecurity, Linux, web security and programming.",
-
-    skills:
-      "Linux 85% · Web Security 70% · Networking 65% · Python 60%",
-
-    labs:
-      "10 safe browser laboratories available.",
-
-    projects:
-      "My Cyber Lab · Kali Linux Lab · NetHunter Project"
-
-  };
+  if (!lab) return;
 
 
   if (
-    command === "clear"
+    state.completed.includes(id)
   ) {
 
-    output.innerHTML = "";
+    toast(
+      "You already completed this lab."
+    );
+
     return;
 
   }
 
 
-  const response =
-    responses[command];
+  state.completed.push(id);
+
+  state.xp += lab.xp;
 
 
-  const responseLine =
-    document.createElement(
-      "p"
+  save();
+
+  renderLabs();
+
+
+  toast(
+    `+${lab.xp} XP — ${lab.title} completed 🔥`
+  );
+
+}
+
+
+
+/* ================================================
+   DASHBOARD
+================================================ */
+
+
+function renderDashboard() {
+
+  const level =
+    Math.floor(state.xp / 100) + 1;
+
+
+  const within =
+    state.xp % 100;
+
+
+  const names = [
+
+    "Cyber Recruit",
+    "Packet Scout",
+    "Security Learner",
+    "Web Hunter",
+    "Blue Teamer",
+    "Cyber Explorer",
+    "Lab Runner",
+    "Security Builder",
+    "Cyber Specialist",
+    "Elite Learner"
+
+  ];
+
+
+  $("#levelNumber").textContent =
+    level;
+
+
+  $("#levelName").textContent =
+    names[
+      Math.min(
+        level - 1,
+        names.length - 1
+      )
+    ];
+
+
+  $("#xpText").textContent =
+    `${within} / 100 XP`;
+
+
+  $("#xpPercent").textContent =
+    `${within}%`;
+
+
+  $("#xpBar").style.width =
+    `${within}%`;
+
+
+  $("#completedCount").textContent =
+    state.completed.length;
+
+
+  $("#totalXP").textContent =
+    state.xp;
+
+
+  $("#heroLabs").textContent =
+    labs.length;
+
+
+  $("#heroXP").textContent =
+    state.xp;
+
+
+  const unlocked =
+    achievements.filter(
+      achievement =>
+        achievement[3](state)
+    ).length;
+
+
+  $("#achievementCount").textContent =
+    unlocked;
+
+
+  $("#achievementHint").textContent =
+    `${unlocked} unlocked`;
+
+
+  $("#achievementGrid").innerHTML =
+
+    achievements.map(
+      achievement => `
+
+        <div
+          class="
+            achievement
+            ${
+              achievement[3](state)
+                ? "unlocked"
+                : ""
+            }
+          ">
+
+          <div class="emoji">
+            ${achievement[1]}
+          </div>
+
+          <span>
+            ${achievement[2]}
+          </span>
+
+        </div>
+
+      `
+    ).join("");
+
+}
+
+
+
+/* ================================================
+   SKILLS
+================================================ */
+
+
+function renderSkills() {
+
+  $("#skillsGrid").innerHTML =
+
+    skills.map(skill => `
+
+      <div class="skill">
+
+        <span>
+          ${skill[0]}
+        </span>
+
+        <div class="skill-bar">
+
+          <i
+            style="width:${skill[1]}%">
+          </i>
+
+        </div>
+
+        <b>
+          ${skill[1]}%
+        </b>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+
+/* ================================================
+   DAILY CHALLENGE
+================================================ */
+
+
+const challenges = [
+
+  {
+    q: "Which HTTP status code means 'Forbidden'?",
+
+    o: [
+      "200",
+      "301",
+      "403",
+      "500"
+    ],
+
+    a: 2
+  },
+
+  {
+    q: "Which protocol is normally used for secure web traffic?",
+
+    o: [
+      "FTP",
+      "HTTPS",
+      "HTTP",
+      "Telnet"
+    ],
+
+    a: 1
+  },
+
+  {
+    q: "What does DNS primarily translate?",
+
+    o: [
+      "Domains to IP addresses",
+      "Files to hashes",
+      "Ports to users",
+      "Passwords to keys"
+    ],
+
+    a: 0
+  }
+
+];
+
+
+
+function dailyChallenge() {
+
+  const challenge =
+    challenges[
+      new Date().getDate()
+      % challenges.length
+    ];
+
+
+  $("#challengeQuestion")
+    .textContent =
+    challenge.q;
+
+
+  $("#challengeOptions").innerHTML =
+
+    challenge.o.map(
+      (answer, index) => `
+
+        <button
+          data-i="${index}">
+
+          ${answer}
+
+        </button>
+
+      `
+    ).join("");
+
+
+  $$("#challengeOptions button")
+    .forEach(button => {
+
+      button.onclick = () => {
+
+        if (state.daily) {
+
+          toast(
+            "Daily challenge already completed."
+          );
+
+          return;
+
+        }
+
+
+        if (
+          Number(button.dataset.i)
+          === challenge.a
+        ) {
+
+          state.daily = true;
+
+          state.xp += 50;
+
+
+          save();
+
+
+          $("#challengeResult")
+            .textContent =
+            "Correct! +50 XP 🧠";
+
+
+          toast(
+            "+50 XP — daily challenge complete!"
+          );
+
+        } else {
+
+          $("#challengeResult")
+            .textContent =
+            "Not quite. Try again.";
+
+        }
+
+      };
+
+    });
+
+}
+
+
+
+/* ================================================
+   SUPABASE REVIEWS
+================================================ */
+
+
+async function loadReviews() {
+
+  if (!SUPABASE_KEY) {
+
+    $("#reviewsList").innerHTML =
+      "<p>Supabase is not configured.</p>";
+
+    return;
+
+  }
+
+
+  try {
+
+    const response =
+
+      await fetch(
+        `${SUPABASE_URL}/rest/v1/reviews?select=*&order=created_at.desc`,
+        {
+          headers: {
+
+            apikey: SUPABASE_KEY,
+
+            Authorization:
+              `Bearer ${SUPABASE_KEY}`
+
+          }
+
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Supabase request failed"
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    renderReviews(data);
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    $("#reviewsList").innerHTML = `
+
+      <p style="color:#8d9aac">
+
+        Could not load reviews.
+        Check your Supabase table/RLS settings.
+
+      </p>
+
+    `;
+
+  }
+
+}
+
+
+
+function renderReviews(data) {
+
+  const list =
+    $("#reviewsList");
+
+
+  $("#reviewCount").textContent =
+
+    `${data.length} review${
+      data.length === 1
+        ? ""
+        : "s"
+    }`;
+
+
+  if (!data.length) {
+
+    list.innerHTML = `
+
+      <p style="color:#8d9aac">
+
+        No reviews yet.
+        Be the first 👀
+
+      </p>
+
+    `;
+
+
+    $("#avgRating")
+      .textContent = "—";
+
+
+    return;
+
+  }
+
+
+  const average =
+
+    data.reduce(
+      (total, review) =>
+        total +
+        Number(review.rating || 0),
+
+      0
+
+    ) / data.length;
+
+
+  $("#avgRating")
+    .textContent =
+    average.toFixed(1);
+
+
+  list.innerHTML =
+
+    data.slice(0, 12)
+      .map(review => `
+
+        <div class="review-item">
+
+          <div class="review-item-head">
+
+            <strong>
+              ${escapeHtml(
+                review.name ||
+                "Anonymous"
+              )}
+            </strong>
+
+            <span class="stars-text">
+
+              ${
+                "★".repeat(
+                  Number(review.rating || 0)
+                )
+              }
+
+              ${
+                "☆".repeat(
+                  5 -
+                  Number(review.rating || 0)
+                )
+              }
+
+            </span>
+
+          </div>
+
+
+          <p>
+            ${escapeHtml(
+              review.comment || ""
+            )}
+          </p>
+
+
+          <span class="review-date">
+
+            ${
+              review.created_at
+                ? new Date(
+                    review.created_at
+                  ).toLocaleDateString()
+                : ""
+            }
+
+          </span>
+
+        </div>
+
+      `).join("");
+
+}
+
+
+
+/* ================================================
+   STAR RATING
+================================================ */
+
+
+function setStars(number) {
+
+  selectedRating =
+    number;
+
+
+  $$("#starPicker button")
+    .forEach(button => {
+
+      button.classList.toggle(
+
+        "active",
+
+        Number(
+          button.dataset.star
+        ) <= number
+
+      );
+
+    });
+
+}
+
+
+
+$$("#starPicker button")
+  .forEach(button => {
+
+    button.onclick = () => {
+
+      setStars(
+        Number(
+          button.dataset.star
+        )
+      );
+
+    };
+
+  });
+
+
+
+/* ================================================
+   POST REVIEW
+================================================ */
+
+
+async function submitReview() {
+
+  const name =
+    $("#reviewName")
+      .value
+      .trim()
+      || "Anonymous";
+
+
+  const comment =
+    $("#reviewText")
+      .value
+      .trim();
+
+
+  const status =
+    $("#reviewStatus");
+
+
+  if (
+    !selectedRating ||
+    !comment
+  ) {
+
+    status.textContent =
+      "Choose a star rating and write a comment.";
+
+    return;
+
+  }
+
+
+  status.textContent =
+    "Posting…";
+
+
+  try {
+
+    const response =
+
+      await fetch(
+        `${SUPABASE_URL}/rest/v1/reviews`,
+        {
+
+          method: "POST",
+
+          headers: {
+
+            apikey: SUPABASE_KEY,
+
+            Authorization:
+              `Bearer ${SUPABASE_KEY}`,
+
+            "Content-Type":
+              "application/json",
+
+            Prefer:
+              "return=minimal"
+
+          },
+
+          body:
+            JSON.stringify({
+
+              name,
+
+              rating:
+                selectedRating,
+
+              comment
+
+            })
+
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        await response.text()
+      );
+
+    }
+
+
+    $("#reviewText")
+      .value = "";
+
+
+    $("#reviewName")
+      .value = "";
+
+
+    selectedRating = 0;
+
+
+    setStars(0);
+
+
+    status.textContent =
+      "Posted!";
+
+
+    toast(
+      "Review posted ⭐"
     );
 
 
-  responseLine.className =
-    "muted";
+    loadReviews();
 
 
-  responseLine.textContent =
-    response ||
-    `Command not found: ${command}`;
+  } catch (error) {
+
+    console.error(error);
 
 
-  output.appendChild(
-    responseLine
-  );
+    status.textContent =
+      "Could not post. Check your Supabase table and INSERT policy.";
+
+  }
+
+}
+
+
+
+$("#submitReview")
+  .onclick =
+  submitReview;
+
+
+
+/* ================================================
+   TERMINAL
+================================================ */
+
+
+const terminalCommands = {
+
+  help:
+    "Commands: help, about, labs, skills, status, clear",
+
+  about:
+    "Vlad — 16-year-old cybersecurity learner.",
+
+  labs:
+    `${labs.length} labs available. Scroll to #labs to explore them.`,
+
+  skills:
+    "Linux • Networking • Web Security • Python • CTF",
+
+  status:
+    () =>
+      `Level ${
+        Math.floor(
+          state.xp / 100
+        ) + 1
+      } • ${
+        state.xp
+      } XP • ${
+        state.completed.length
+      }/${labs.length} labs completed`
+
+};
+
+
+
+function terminal(command) {
+
+  const output =
+    $("#terminalOutput");
+
+
+  if (command === "clear") {
+
+    output.innerHTML = "";
+
+    return;
+
+  }
+
+
+  const value =
+    terminalCommands[command];
+
+
+  const result =
+    typeof value === "function"
+      ? value()
+      : value;
+
+
+  const finalText =
+    result ||
+    `Command not found: ${command}. Type 'help'.`;
+
+
+  output.innerHTML += `
+
+    <div>
+
+      <span class="green">
+        vlad@cyberlab
+      </span>:<span class="blue">~</span>$
+
+      ${escapeHtml(command)}
+
+    </div>
+
+
+    <div class="white">
+
+      ${escapeHtml(finalText)}
+
+    </div>
+
+  `;
 
 
   output.scrollTop =
@@ -1473,449 +1120,83 @@ function runCommand(command) {
 }
 
 
-// ==========================
-// REVIEWS
-// ==========================
 
-function initReviews() {
+$("#commandInput")
+  .addEventListener(
+    "keydown",
+    event => {
 
-  $$("#starPicker button")
-    .forEach(star => {
+      if (
+        event.key === "Enter"
+      ) {
 
-      star.onclick =
-        () => {
-
-          selectedRating =
-            Number(
-              star.dataset.rating
-            );
-
-          paintStars(
-            selectedRating
-          );
-
-        };
-
-    });
+        terminal(
+          event.target.value
+            .trim()
+            .toLowerCase()
+        );
 
 
-  $("#reviewComment")
-    .addEventListener(
-      "input",
-      event => {
-
-        $("#charCount")
-          .textContent =
-          `${event.target.value.length} / 500`;
+        event.target.value = "";
 
       }
-    );
+
+    }
+  );
 
 
-  $("#submitReview").onclick =
-    submitReview;
+
+/* ================================================
+   SCROLL ANIMATIONS
+================================================ */
 
 
-  $("#refreshReviews").onclick =
-    loadReviews;
+const observer =
+  new IntersectionObserver(
 
+    entries => {
 
-  loadReviews();
+      entries.forEach(entry => {
 
-}
+        if (
+          entry.isIntersecting
+        ) {
 
+          entry.target
+            .classList
+            .add("visible");
 
-function paintStars(amount) {
-
-  $$("#starPicker button")
-    .forEach(star => {
-
-      star.classList.toggle(
-        "selected",
-        Number(
-          star.dataset.rating
-        ) <= amount
-      );
-
-    });
-
-}
-
-
-async function loadReviews() {
-
-  const list =
-    $("#reviewsList");
-
-
-  list.innerHTML =
-    `<div class="loading">
-      LOADING COMMUNITY...
-    </div>`;
-
-
-  const {
-    data,
-    error
-  } =
-    await db
-      .from("reviews")
-      .select(
-        "id, username, comment, rating, created_at"
-      )
-      .order(
-        "created_at",
-        {
-          ascending: false
         }
-      )
-      .limit(30);
 
-
-  if (error) {
-
-    list.innerHTML =
-      `<div class="review-error">
-        ${escapeHTML(
-          error.message
-        )}
-      </div>`;
-
-    return;
-
-  }
-
-
-  renderReviews(
-    data || []
-  );
-
-  updateRating(
-    data || []
-  );
-
-}
-
-
-function renderReviews(reviews) {
-
-  const list =
-    $("#reviewsList");
-
-
-  if (
-    !reviews.length
-  ) {
-
-    list.innerHTML =
-      `<div class="review-empty">
-        NO REVIEWS YET.<br><br>
-        Be the first one 👀
-      </div>`;
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    reviews
-      .map(review => {
-
-        const stars =
-          "★".repeat(
-            Number(
-              review.rating
-            )
-          ) +
-          "☆".repeat(
-            5 -
-            Number(
-              review.rating
-            )
-          );
-
-
-        const date =
-          new Date(
-            review.created_at
-          )
-          .toLocaleDateString(
-            undefined,
-            {
-              day: "2-digit",
-              month: "short",
-              year: "numeric"
-            }
-          );
-
-
-        return `
-          <article class="review-card">
-
-            <div class="review-card-top">
-
-              <div>
-                <div class="review-user">
-                  ${escapeHTML(
-                    review.username
-                  )}
-                </div>
-
-                <div class="review-date">
-                  ${date}
-                </div>
-              </div>
-
-              <div class="review-stars">
-                ${stars}
-              </div>
-
-            </div>
-
-            <p>
-              ${escapeHTML(
-                review.comment
-              )}
-            </p>
-
-          </article>
-        `;
-
-      })
-      .join("");
-
-}
-
-
-function updateRating(reviews) {
-
-  const count =
-    reviews.length;
-
-
-  const average =
-    count
-      ? reviews.reduce(
-          (sum, r) =>
-            sum +
-            Number(r.rating),
-          0
-        ) / count
-      : 0;
-
-
-  const rounded =
-    Math.round(
-      average
-    );
-
-
-  $("#averageRating")
-    .textContent =
-    average.toFixed(1);
-
-
-  $("#averageStars")
-    .textContent =
-    "★".repeat(
-      rounded
-    ) +
-    "☆".repeat(
-      5 - rounded
-    );
-
-
-  $("#reviewCount")
-    .textContent =
-    `${count} ${
-      count === 1
-        ? "review"
-        : "reviews"
-    }`;
-
-}
-
-
-async function submitReview() {
-
-  const username =
-    $("#reviewName")
-      .value
-      .trim();
-
-  const comment =
-    $("#reviewComment")
-      .value
-      .trim();
-
-
-  if (
-    selectedRating < 1
-  ) {
-
-    toast(
-      "Choose a rating ⭐"
-    );
-
-    return;
-
-  }
-
-
-  if (
-    username.length < 2 ||
-    username.length > 30
-  ) {
-
-    toast(
-      "Username must be 2–30 characters."
-    );
-
-    return;
-
-  }
-
-
-  if (
-    comment.length < 3
-  ) {
-
-    toast(
-      "Write a longer comment."
-    );
-
-    return;
-
-  }
-
-
-  const button =
-    $("#submitReview");
-
-
-  button.disabled =
-    true;
-
-  button.textContent =
-    "POSTING...";
-
-
-  const {
-    error
-  } =
-    await db
-      .from("reviews")
-      .insert({
-        username,
-        comment,
-        rating:
-          selectedRating
       });
 
+    },
 
-  button.disabled =
-    false;
+    {
+      threshold: .08
+    }
 
-  button.textContent =
-    "POST REVIEW →";
-
-
-  if (error) {
-
-    toast(
-      "Error: " +
-      error.message
-    );
-
-    return;
-
-  }
-
-
-  $("#reviewName")
-    .value = "";
-
-  $("#reviewComment")
-    .value = "";
-
-  $("#charCount")
-    .textContent =
-    "0 / 500";
-
-
-  selectedRating = 0;
-
-  paintStars(0);
-
-  toast(
-    "Review posted 🔥"
   );
 
-  loadReviews();
 
-}
-
-
-// ==========================
-// UTILS
-// ==========================
-
-function escapeHTML(value) {
-
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
-}
-
-
-function toast(message) {
-
-  const el =
-    $("#toast");
-
-  el.textContent =
-    message;
-
-  el.classList.add(
-    "show"
+$$(".reveal")
+  .forEach(element =>
+    observer.observe(element)
   );
 
-  clearTimeout(
-    window.toastTimer
-  );
-
-  window.toastTimer =
-    setTimeout(
-      () =>
-        el.classList.remove(
-          "show"
-        ),
-      3000
-    );
-
-}
 
 
-function $(selector) {
-
-  return document.querySelector(
-    selector
-  );
-
-}
+/* ================================================
+   START
+================================================ */
 
 
-function $$(selector) {
+renderLabs();
 
-  return [
-    ...document.querySelectorAll(
-      selector
-    )
-  ];
+renderDashboard();
 
-}
+renderSkills();
+
+dailyChallenge();
+
+loadReviews();
