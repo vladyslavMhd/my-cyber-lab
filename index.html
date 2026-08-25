@@ -5,360 +5,196 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>MY CYBER LAB // VLAD</title>
-
-  <meta
-    name="description"
-    content="Vlad's personal cybersecurity learning lab and portfolio."
-  >
+  <meta name="description"
+        content="Vlad's personal cybersecurity learning laboratory.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- ================= LOADER ================= -->
+<div class="noise"></div>
+<div class="grid-bg"></div>
 
-<div class="loader" id="loader">
-  <div class="loader-box">
+<div id="toast" class="toast"></div>
 
-    <div class="loader-logo">VL</div>
+<header class="topbar">
 
-    <div class="loader-title">
-      INITIALIZING MY CYBER LAB
-    </div>
-
-    <div class="loader-bar">
-      <span id="loaderProgress"></span>
-    </div>
-
-    <div class="loader-status" id="loaderStatus">
-      Loading secure environment...
-    </div>
-
-  </div>
-</div>
-
-
-<!-- ================= BACKGROUND ================= -->
-
-<div class="background-grid"></div>
-<div class="background-glow"></div>
-<div id="particles"></div>
-
-
-<!-- ================= NAVBAR ================= -->
-
-<header class="navbar">
-
-  <a href="#home" class="logo">
-    <span class="logo-mark">V</span>
-
-    <div>
-      <strong>MY CYBER LAB</strong>
-      <small>VLAD // SECURITY PORTFOLIO</small>
-    </div>
+  <a href="#home" class="brand">
+    <span class="brand-mark">V</span>
+    <span>MY CYBER <b>LAB</b></span>
   </a>
 
-
-  <nav class="nav-links">
-
-    <a href="#home">HOME</a>
-    <a href="#about">ABOUT</a>
-    <a href="#skills">SKILLS</a>
-    <a href="#labs">LABS</a>
-    <a href="#projects">PROJECTS</a>
-    <a href="#terminal">TERMINAL</a>
-
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#labs">Labs</a>
+    <a href="#projects">Projects</a>
+    <a href="#terminal">Terminal</a>
   </nav>
 
+  <a href="#labs" class="nav-cta">
+    ENTER LAB <span>↗</span>
+  </a>
 
-  <div class="nav-actions">
-
-    <button
-      class="language-button"
-      id="languageButton"
-    >
-      EN
-    </button>
-
-    <a
-      href="https://github.com/"
-      target="_blank"
-      class="github-button"
-    >
-      GITHUB ↗
-    </a>
-
-    <button
-      class="mobile-menu"
-      id="mobileMenu"
-      aria-label="Open menu"
-    >
-      ☰
-    </button>
-
-  </div>
+  <button class="menu" aria-label="Menu">☰</button>
 
 </header>
 
 
-<main>
+<main id="home">
 
+<!-- HERO -->
 
-<!-- ================= HERO ================= -->
+<section class="hero section">
 
-<section class="hero section" id="home">
+  <div class="hero-copy reveal">
 
-  <div class="hero-content">
-
-    <div class="status-pill">
-
-      <span class="status-dot"></span>
-
+    <div class="eyebrow">
+      <i></i>
       SYSTEM ONLINE
-
-      <span class="separator">•</span>
-
-      CYBER LAB v3.0
-
+      <span>•</span>
+      2026
     </div>
-
-
-    <div class="terminal-command">
-
-      <span>vlad@cyberlab:~$</span>
-
-      whoami
-
-    </div>
-
 
     <h1>
-
-      LEARN.<br>
-
-      <span>BUILD.</span><br>
-
-      SECURE.
-
+      Learn.<br>
+      <em>Build.</em><br>
+      Secure.
     </h1>
 
-
-    <p class="hero-description">
-
-      I'm <strong>Vlad</strong>, a 16-year-old cybersecurity
-      enthusiast exploring Linux, networking, web security,
-      CTFs and defensive security.
-
-      <br><br>
-
-      This website is my personal digital laboratory —
-      a place where I learn, experiment and document my progress.
-
+    <p class="hero-text">
+      Welcome to my personal cybersecurity laboratory.
+      I learn Linux, networking, web security, Python and
+      defensive security by building projects and practicing
+      inside controlled environments.
     </p>
 
+    <div class="hero-actions">
 
-    <div class="hero-buttons">
-
-      <a
-        href="#labs"
-        class="button button-primary"
-      >
-        ENTER THE LAB →
+      <a href="#labs" class="btn primary">
+        EXPLORE LABS
+        <span>→</span>
       </a>
 
-      <a
-        href="#about"
-        class="button button-secondary"
-      >
+      <a href="#about" class="btn ghost">
         ABOUT ME
       </a>
 
     </div>
 
+    <div class="hero-meta">
 
-    <div class="hero-stats">
+      <span>
+        <b class="dot"></b>
+        LAB STATUS: OPERATIONAL
+      </span>
 
-      <div class="stat">
+      <span>LOCAL PROJECT</span>
 
-        <strong>16</strong>
-
-        <span>AGE</span>
-
-      </div>
-
-
-      <div class="stat">
-
-        <strong>05</strong>
-
-        <span>FOCUS AREAS</span>
-
-      </div>
-
-
-      <div class="stat">
-
-        <strong>∞</strong>
-
-        <span>CURIOUSITY</span>
-
-      </div>
+      <span>v4.0</span>
 
     </div>
 
   </div>
 
 
-  <!-- DASHBOARD -->
+  <div class="hero-console reveal">
 
-  <div class="hero-dashboard">
+    <div class="console-top">
 
-    <div class="dashboard-header">
-
-      <div class="window-dots">
-        <span></span>
-        <span></span>
-        <span></span>
+      <div class="traffic">
+        <i></i>
+        <i></i>
+        <i></i>
       </div>
 
-      <span>CYBER_DASHBOARD</span>
+      <span>vlad@cyberlab — dashboard</span>
 
       <b>● LIVE</b>
 
     </div>
 
 
-    <div class="dashboard-body">
+    <div class="console-body">
+
+      <div class="profile-chip">
+
+        <div class="avatar">V</div>
+
+        <div>
+          <b>VLAD</b>
+          <small>Cybersecurity learner</small>
+        </div>
+
+        <span class="verified">✓</span>
+
+      </div>
 
 
-      <div class="operator">
+      <div class="terminal-line">
 
-        <div class="operator-avatar">
-          VL
+        <span>01</span>
+        <b>$</b>
+
+        <span id="heroType"></span>
+
+        <i class="cursor"></i>
+
+      </div>
+
+
+      <div class="terminal-output-mini">
+        Environment loaded successfully.
+      </div>
+
+
+      <div class="metric-grid">
+
+        <div>
+          <small>LABS</small>
+          <strong id="heroLabs">0</strong>
+          <span>available</span>
         </div>
 
         <div>
+          <small>PROGRESS</small>
+          <strong id="heroProgress">0%</strong>
+          <span>completed</span>
+        </div>
 
-          <small>OPERATOR</small>
-
-          <strong>VLAD</strong>
-
-          <span>CYBERSECURITY ENTHUSIAST</span>
-
+        <div>
+          <small>STATUS</small>
+          <strong class="green">READY</strong>
+          <span>all systems</span>
         </div>
 
       </div>
 
 
-      <div class="dashboard-progress">
+      <div class="network">
 
-        <div class="dashboard-progress-header">
+        <span class="node n1"></span>
+        <span class="node n2"></span>
+        <span class="node n3"></span>
+        <span class="node n4"></span>
 
-          <span>LAB PROGRESS</span>
+        <svg viewBox="0 0 500 120"
+             preserveAspectRatio="none">
 
-          <strong id="globalProgress">
-            0%
-          </strong>
+          <path d="M20 80 C120 5 170 110 260 55 S380 10 480 70"/>
 
+        </svg>
+
+        <div class="network-label">
+          SECURE NETWORK / MONITORING
         </div>
-
-        <div class="progress-bar">
-
-          <span
-            id="globalProgressBar"
-            style="width:0%"
-          ></span>
-
-        </div>
-
-      </div>
-
-
-      <div class="system-stats">
-
-        <div class="system-stat">
-
-          <span>LINUX</span>
-
-          <div>
-            <i style="width:88%"></i>
-          </div>
-
-          <b>88%</b>
-
-        </div>
-
-
-        <div class="system-stat">
-
-          <span>NETWORKING</span>
-
-          <div>
-            <i style="width:72%"></i>
-          </div>
-
-          <b>72%</b>
-
-        </div>
-
-
-        <div class="system-stat">
-
-          <span>WEB SECURITY</span>
-
-          <div>
-            <i style="width:65%"></i>
-          </div>
-
-          <b>65%</b>
-
-        </div>
-
-
-        <div class="system-stat">
-
-          <span>CTF</span>
-
-          <div>
-            <i style="width:55%"></i>
-          </div>
-
-          <b>55%</b>
-
-        </div>
-
-      </div>
-
-
-      <div class="system-log">
-
-        <p>
-          <span>[OK]</span>
-          Security environment initialized
-        </p>
-
-        <p>
-          <span>[OK]</span>
-          Learning modules loaded
-        </p>
-
-        <p>
-          <span>[OK]</span>
-          Interactive labs ready
-        </p>
-
-        <p class="cyan">
-          [INFO] Authorized labs only.
-        </p>
 
       </div>
 
@@ -369,157 +205,55 @@
 </section>
 
 
-<!-- ================= TICKER ================= -->
+<!-- ABOUT -->
 
-<div class="ticker">
+<section id="about" class="section split">
 
-  <div>
+  <div class="section-head reveal">
 
-    LINUX
-
-    <b>•</b>
-
-    NETWORKING
-
-    <b>•</b>
-
-    WEB SECURITY
-
-    <b>•</b>
-
-    CTF
-
-    <b>•</b>
-
-    DEFENSE
-
-    <b>•</b>
-
-    CYBERSECURITY
-
-    <b>•</b>
-
-    LINUX
-
-    <b>•</b>
-
-    NETWORKING
-
-    <b>•</b>
-
-    WEB SECURITY
-
-    <b>•</b>
-
-    CTF
-
-  </div>
-
-</div>
-
-
-<!-- ================= ABOUT ================= -->
-
-<section
-  class="section"
-  id="about"
->
-
-  <div class="section-heading">
-
-    <span>01 //</span>
+    <span>01 / PROFILE</span>
 
     <h2>
-      ABOUT <em>VLAD</em>
+      Curious<br>
+      by default.
     </h2>
 
   </div>
 
 
-  <div class="about-grid">
+  <div class="about-card reveal">
 
+    <div class="about-main">
 
-    <div class="identity-card reveal">
+      <div class="big-number">16</div>
 
-      <div class="identity-header">
+      <div>
 
-        <span>CYBER ID</span>
+        <span class="label">
+          YEARS OLD
+        </span>
 
-        <b>ACTIVE</b>
+        <h3>Hi, I'm Vlad.</h3>
 
-      </div>
-
-
-      <div class="identity-avatar">
-        VL
-      </div>
-
-
-      <h3>VLAD</h3>
-
-      <p>CYBERSECURITY ENTHUSIAST</p>
-
-
-      <div class="identity-info">
-
-        <div>
-          <span>AGE</span>
-          <strong>16</strong>
-        </div>
-
-        <div>
-          <span>ROLE</span>
-          <strong>LEARNER</strong>
-        </div>
-
-        <div>
-          <span>STATUS</span>
-          <strong>ONLINE</strong>
-        </div>
+        <p>
+          I'm 16 and I'm seriously interested in cybersecurity.
+          I enjoy understanding how systems work, building
+          Linux environments, experimenting with networking
+          and turning ideas into useful projects.
+        </p>
 
       </div>
 
     </div>
 
 
-    <div class="about-content reveal">
+    <div class="about-tags">
 
-      <small>WHO AM I?</small>
-
-      <h3>
-
-        Curious enough to break things.
-        <span>Smart enough to understand them.</span>
-
-      </h3>
-
-
-      <p>
-
-        Cybersecurity interests me because it combines
-        technology, logic, creativity and problem solving.
-
-      </p>
-
-
-      <p>
-
-        I use virtual machines and intentionally vulnerable
-        environments to learn how operating systems,
-        networks and web applications work.
-
-      </p>
-
-
-      <div class="tag-list">
-
-        <span>CYBERSECURITY</span>
-        <span>KALI LINUX</span>
-        <span>NETWORKING</span>
-        <span>WEB SECURITY</span>
-        <span>CTF</span>
-
-      </div>
+      <span>CYBERSECURITY</span>
+      <span>LINUX</span>
+      <span>NETWORKING</span>
+      <span>PYTHON</span>
+      <span>WEB SECURITY</span>
 
     </div>
 
@@ -528,155 +262,105 @@
 </section>
 
 
-<!-- ================= SKILLS ================= -->
+<!-- SKILLS -->
 
-<section
-  class="section section-dark"
-  id="skills"
->
+<section id="skills" class="section">
 
-  <div class="section-heading">
+  <div class="section-head reveal">
 
-    <span>02 //</span>
+    <span>02 / TOOLKIT</span>
 
     <h2>
-      SKILL <em>TREE</em>
+      Skills I'm<br>
+      building.
     </h2>
 
-  </div>
-
-
-  <p class="section-intro">
-
-    My current cybersecurity learning path.
-    Progress is built one concept at a time.
-
-  </p>
-
-
-  <div class="skill-root">
-
-    <small>ROOT</small>
-
-    <strong>CYBERSECURITY</strong>
-
-    <span>MAIN LEARNING PATH</span>
+    <p>
+      Not claiming to know everything —
+      just getting better every day.
+    </p>
 
   </div>
-
-
-  <div class="skill-connector"></div>
 
 
   <div class="skills-grid">
 
+    <article class="skill reveal">
 
-    <article class="skill-card reveal">
+      <div class="icon">⌘</div>
 
-      <span>01</span>
-
-      <div class="skill-icon">⌘</div>
-
-      <h3>LINUX</h3>
+      <h3>Linux</h3>
 
       <p>
-        Terminal, permissions, processes,
-        filesystems and system administration.
+        CLI, filesystems, permissions,
+        processes and system administration.
       </p>
 
-      <div class="skill-bar">
-        <i style="width:88%"></i>
+      <div class="meter">
+        <i style="width:82%"></i>
       </div>
 
-      <small>88%</small>
+      <span>82%</span>
 
     </article>
 
 
-    <article class="skill-card reveal">
+    <article class="skill reveal">
 
-      <span>02</span>
+      <div class="icon">⌁</div>
 
-      <div class="skill-icon">◎</div>
-
-      <h3>NETWORKING</h3>
+      <h3>Networking</h3>
 
       <p>
-        TCP/IP, DNS, ports, services
-        and packet analysis.
+        IP, DNS, TCP/UDP, ports,
+        routing and packet analysis.
       </p>
 
-      <div class="skill-bar">
+      <div class="meter">
         <i style="width:72%"></i>
       </div>
 
-      <small>72%</small>
+      <span>72%</span>
 
     </article>
 
 
-    <article class="skill-card reveal">
+    <article class="skill reveal">
 
-      <span>03</span>
+      <div class="icon">⌬</div>
 
-      <div class="skill-icon">⌁</div>
-
-      <h3>WEB SECURITY</h3>
+      <h3>Web Security</h3>
 
       <p>
-        HTTP, authentication, sessions
-        and secure application concepts.
+        HTTP, authentication,
+        input validation and OWASP concepts.
       </p>
 
-      <div class="skill-bar">
-        <i style="width:65%"></i>
+      <div class="meter">
+        <i style="width:66%"></i>
       </div>
 
-      <small>65%</small>
+      <span>66%</span>
 
     </article>
 
 
-    <article class="skill-card reveal">
+    <article class="skill reveal">
 
-      <span>04</span>
+      <div class="icon">{ }</div>
 
-      <div class="skill-icon">✦</div>
-
-      <h3>CTF</h3>
+      <h3>Python</h3>
 
       <p>
-        Authorized challenges,
-        investigation and problem solving.
+        Automation, parsing,
+        utilities and defensive scripts.
       </p>
 
-      <div class="skill-bar">
-        <i style="width:55%"></i>
+      <div class="meter">
+        <i style="width:61%"></i>
       </div>
 
-      <small>55%</small>
-
-    </article>
-
-
-    <article class="skill-card reveal">
-
-      <span>05</span>
-
-      <div class="skill-icon">◇</div>
-
-      <h3>DEFENSE</h3>
-
-      <p>
-        Hardening, monitoring,
-        detection and security mindset.
-      </p>
-
-      <div class="skill-bar">
-        <i style="width:42%"></i>
-      </div>
-
-      <small>42%</small>
+      <span>61%</span>
 
     </article>
 
@@ -685,189 +369,136 @@
 </section>
 
 
-<!-- ================= LABS ================= -->
+<!-- LABS -->
 
-<section
-  class="section"
-  id="labs"
->
+<section id="labs" class="section labs-section">
 
-  <div class="section-heading">
+  <div class="section-head reveal">
 
-    <span>03 //</span>
+    <span>03 / INTERACTIVE LABS</span>
 
     <h2>
-      INTERACTIVE <em>LABS</em>
+      Don't just read it.<br>
+      <em>Do it.</em>
     </h2>
 
-  </div>
-
-
-  <p class="section-intro">
-
-    Open a laboratory, complete its safe learning tasks
-    and track your progress automatically.
-
-  </p>
-
-
-  <div
-    class="labs-grid"
-    id="labsGrid"
-  >
-
-    <!-- JS INSERTS LABS HERE -->
+    <p>
+      Complete tasks inside each laboratory.
+      Your progress is automatically saved in your browser.
+    </p>
 
   </div>
 
 
-  <div class="overall-progress reveal">
+  <div class="lab-toolbar reveal">
 
-    <div>
+    <span id="labCount">
+      6 LABS
+    </span>
 
-      <span>OVERALL LAB PROGRESS</span>
+    <div class="overall">
 
-      <strong id="labsProgressText">
-        0%
-      </strong>
+      <span>OVERALL</span>
 
-    </div>
+      <b id="overallText">0%</b>
 
-    <div class="large-progress">
-
-      <span
-        id="labsProgressBar"
-        style="width:0%"
-      ></span>
+      <i>
+        <u id="overallBar"></u>
+      </i>
 
     </div>
 
   </div>
 
+
+  <div id="labsGrid" class="labs-grid"></div>
+
 </section>
 
 
-<!-- ================= ACHIEVEMENTS ================= -->
+<!-- PROJECTS -->
 
-<section class="section section-dark">
+<section id="projects" class="section">
 
-  <div class="section-heading">
+  <div class="section-head reveal">
 
-    <span>04 //</span>
+    <span>04 / PROJECTS</span>
 
     <h2>
-      ACHIEVE<em>MENTS</em>
+      Stuff I<br>
+      actually build.
     </h2>
 
   </div>
 
 
-  <div
-    class="achievements-grid"
-    id="achievementsGrid"
-  >
+  <div class="projects-grid">
 
-    <!-- JS INSERTS ACHIEVEMENTS -->
+    <article class="project featured reveal">
 
-  </div>
-
-</section>
-
-
-<!-- ================= PROJECTS ================= -->
-
-<section
-  class="section"
-  id="projects"
->
-
-  <div class="section-heading">
-
-    <span>05 //</span>
-
-    <h2>
-      PROJECT <em>LOG</em>
-    </h2>
-
-  </div>
-
-
-  <div class="projects-list">
-
-
-    <article class="project-card reveal">
-
-      <span>P-001</span>
-
-      <div>
-
-        <h3>MY CYBER LAB</h3>
-
-        <p>
-          Interactive cybersecurity portfolio
-          built with HTML, CSS and JavaScript.
-        </p>
-
-        <div class="tag-list">
-
-          <span>HTML</span>
-          <span>CSS</span>
-          <span>JAVASCRIPT</span>
-          <span>GITHUB PAGES</span>
-
-        </div>
-
+      <div class="project-top">
+        <span>01</span>
+        <b>PERSONAL WEBSITE</b>
       </div>
 
-      <b>LIVE ↗</b>
+      <h3>My Cyber Lab</h3>
+
+      <p>
+        A custom cybersecurity learning dashboard
+        with interactive laboratories, progress
+        tracking and a built-in terminal.
+      </p>
+
+      <div class="project-tags">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JS</span>
+      </div>
 
     </article>
 
 
-    <article class="project-card reveal">
+    <article class="project reveal">
 
-      <span>P-002</span>
-
-      <div>
-
-        <h3>HOME CYBER LAB</h3>
-
-        <p>
-          Virtual learning environment for
-          Linux, networking and security practice.
-        </p>
-
-        <div class="tag-list">
-
-          <span>KALI</span>
-          <span>VM</span>
-          <span>LINUX</span>
-
-        </div>
-
+      <div class="project-top">
+        <span>02</span>
+        <b>LAB ENVIRONMENT</b>
       </div>
 
-      <b class="muted">BUILDING</b>
+      <h3>Home Cyber Lab</h3>
+
+      <p>
+        Virtualized environments for safely learning
+        security concepts.
+      </p>
+
+      <div class="project-tags">
+        <span>LINUX</span>
+        <span>VM</span>
+        <span>NETWORKING</span>
+      </div>
 
     </article>
 
 
-    <article class="project-card reveal">
+    <article class="project reveal">
 
-      <span>P-003</span>
-
-      <div>
-
-        <h3>FUTURE PROJECT</h3>
-
-        <p>
-          New experiments, write-ups and
-          cybersecurity projects will appear here.
-        </p>
-
+      <div class="project-top">
+        <span>03</span>
+        <b>LEARNING</b>
       </div>
 
-      <b class="muted">LOCKED</b>
+      <h3>Security Notes</h3>
+
+      <p>
+        A growing collection of commands,
+        concepts and lessons learned.
+      </p>
+
+      <div class="project-tags">
+        <span>NOTES</span>
+        <span>RESEARCH</span>
+      </div>
 
     </article>
 
@@ -876,378 +507,165 @@
 </section>
 
 
-<!-- ================= TERMINAL ================= -->
+<!-- TERMINAL -->
 
-<section
-  class="section section-dark terminal-section"
-  id="terminal"
->
+<section id="terminal" class="section terminal-section">
 
-  <div class="section-heading">
+  <div class="section-head reveal">
 
-    <span>06 //</span>
+    <span>05 / COMMAND CENTER</span>
 
     <h2>
-      WEB <em>TERMINAL</em>
+      Talk to the lab.
     </h2>
+
+    <p>
+      Type <b>help</b> to see available commands.
+    </p>
 
   </div>
 
 
-  <div class="terminal-window">
+  <div class="terminal reveal">
 
+    <div class="terminal-head">
 
-    <div class="terminal-header">
-
-      <div class="window-dots">
-
-        <span></span>
-        <span></span>
-        <span></span>
-
+      <div class="traffic">
+        <i></i>
+        <i></i>
+        <i></i>
       </div>
 
       <span>vlad@cyberlab:~</span>
 
-      <b>bash</b>
+      <b>SECURE SHELL</b>
 
     </div>
 
 
-    <div
-      class="terminal-output"
-      id="terminalOutput"
-    >
-
-      <p class="terminal-green">
-        Welcome to MY CYBER LAB terminal.
-      </p>
-
-      <p>
-        Type
-        <strong>help</strong>
-        to see available commands.
-      </p>
-
+    <div id="terminalOutput"
+         class="terminal-output">
     </div>
 
 
-    <form
-      class="terminal-input"
-      id="terminalForm"
-    >
+    <form id="terminalForm"
+          class="terminal-input">
 
       <span>vlad@cyberlab:~$</span>
 
       <input
         id="terminalInput"
-        type="text"
         autocomplete="off"
         spellcheck="false"
+        placeholder="type help..."
       >
 
     </form>
 
   </div>
 
-
-  <p class="terminal-hint">
-
-    Try:
-    <b>help</b>
-    ·
-    <b>labs</b>
-    ·
-    <b>skills</b>
-    ·
-    <b>progress</b>
-    ·
-    <b>clear</b>
-
-  </p>
-
 </section>
 
 
-<!-- ================= KNOWLEDGE ================= -->
+<!-- ACHIEVEMENTS -->
 
-<section class="section section-dark">
+<section class="section achievements">
 
-  <div class="section-heading">
+  <div class="section-head reveal">
 
-    <span>07 //</span>
+    <span>06 / PROGRESS</span>
 
     <h2>
-      KNOWLEDGE <em>BASE</em>
+      Keep stacking<br>
+      wins.
     </h2>
 
   </div>
 
 
-  <div class="knowledge-grid">
-
-
-    <article class="knowledge-card reveal">
-
-      <span>NOTE_001</span>
-
-      <h3>LINUX BASICS</h3>
-
-      <p>
-        Commands, permissions, processes,
-        filesystems and shell fundamentals.
-      </p>
-
-      <b>COMING SOON →</b>
-
-    </article>
-
-
-    <article class="knowledge-card reveal">
-
-      <span>NOTE_002</span>
-
-      <h3>NETWORKING</h3>
-
-      <p>
-        TCP/IP, DNS, HTTP, ports and
-        how devices communicate.
-      </p>
-
-      <b>COMING SOON →</b>
-
-    </article>
-
-
-    <article class="knowledge-card reveal">
-
-      <span>NOTE_003</span>
-
-      <h3>WEB SECURITY</h3>
-
-      <p>
-        Web application architecture,
-        authentication and secure development.
-      </p>
-
-      <b>COMING SOON →</b>
-
-    </article>
-
+  <div id="achievementsGrid"
+       class="achievement-grid">
   </div>
 
 </section>
-
-
-<!-- ================= CONTACT ================= -->
-
-<section class="section contact-section">
-
-  <div class="contact-box reveal">
-
-    <small>FINAL TRANSMISSION</small>
-
-    <h2>
-
-      KEEP<br>
-
-      <em>LEARNING.</em>
-
-    </h2>
-
-    <p>
-
-      Curiosity is the exploit.<br>
-      Knowledge is the patch.
-
-    </p>
-
-
-    <div class="hero-buttons">
-
-      <a
-        href="#home"
-        class="button button-primary"
-      >
-        BACK TO TOP ↑
-      </a>
-
-      <a
-        href="https://github.com/"
-        target="_blank"
-        class="button button-secondary"
-      >
-        GITHUB ↗
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-
 
 </main>
 
 
-<!-- ================= LAB MODAL ================= -->
+<footer>
 
-<div
-  class="lab-modal"
-  id="labModal"
-  aria-hidden="true"
->
+  <div class="brand">
+    <span class="brand-mark">V</span>
+    <span>MY CYBER <b>LAB</b></span>
+  </div>
 
-  <div class="lab-modal-box">
+  <span>
+    Built by Vlad • <span id="year"></span>
+  </span>
+
+  <span>
+    LEARN ETHICALLY. BUILD RESPONSIBLY.
+  </span>
+
+</footer>
 
 
-    <button
-      class="modal-close"
-      id="modalClose"
-      aria-label="Close"
-    >
+<!-- LAB MODAL -->
+
+<div id="labModal"
+     class="modal"
+     aria-hidden="true">
+
+  <div class="modal-card">
+
+    <button id="modalClose"
+            class="modal-close">
       ×
     </button>
 
-
-    <div class="modal-label">
-      <span id="modalCode">
-        LAB_001
+    <div class="modal-kicker">
+      INTERACTIVE LAB /
+      <span id="modalDifficulty">
+        BEGINNER
       </span>
-
-      <b id="modalStatus">
-        READY
-      </b>
     </div>
 
-
     <h2 id="modalTitle">
-      LAB TITLE
+      Lab
     </h2>
 
-
-    <p id="modalDescription">
-      Lab description.
-    </p>
+    <p id="modalDescription"></p>
 
 
     <div class="modal-progress">
 
       <div>
-
-        <span>LAB PROGRESS</span>
-
-        <strong id="modalProgress">
-          0%
-        </strong>
-
+        <span>PROGRESS</span>
+        <b id="modalPercent">0%</b>
       </div>
 
-      <div class="progress-bar">
-
-        <span
-          id="modalProgressBar"
-          style="width:0%"
-        ></span>
-
-      </div>
+      <i>
+        <u id="modalBar"></u>
+      </i>
 
     </div>
 
 
-    <div
-      class="lab-tasks"
-      id="labTasks"
-    >
-
-      <!-- JS INSERTS TASKS -->
-
+    <div id="taskList"
+         class="task-list">
     </div>
 
 
-    <button
-      class="button button-primary modal-finish"
-      id="finishLab"
-    >
-      COMPLETE LAB
-    </button>
+    <button id="finishLab"
+            class="btn primary full">
 
+      FINISH LAB →
 
-  </div>
-
-</div>
-
-
-<!-- ================= TOAST ================= -->
-
-<div
-  class="toast"
-  id="toast"
->
-  <span>✓</span>
-
-  <div>
-    <strong id="toastTitle">
-      Success
-    </strong>
-
-    <small id="toastText">
-      Action completed.
-    </small>
-  </div>
-</div>
-
-
-<!-- ================= EASTER EGG ================= -->
-
-<div
-  class="easter-egg"
-  id="easterEgg"
->
-
-  <div class="easter-box">
-
-    <span>SECRET MODE ACTIVATED</span>
-
-    <strong>🐧</strong>
-
-    <h3>
-      YOU FOUND THE HIDDEN ROOM.
-    </h3>
-
-    <p>
-      Nice one. Keep exploring.
-    </p>
-
-    <button
-      id="closeEasterEgg"
-      class="button button-primary"
-    >
-      RETURN
     </button>
 
   </div>
 
 </div>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-  <p>
-    root@cyberlab:~$ exit
-  </p>
-
-  <span>
-    © 2026 VLAD // MY CYBER LAB
-  </span>
-
-  <small>
-    Built for learning • Authorized labs only
-  </small>
-
-</footer>
 
 
 <script src="script.js"></script>
