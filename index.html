@@ -182,7 +182,117 @@
       </div>
 
       <div class="lab-grid" id="labGrid"></div>
+<!-- LAB MODAL -->
+<div class="lab-modal" id="labModal">
 
+  <div class="lab-window">
+
+    <button class="lab-close" id="closeLab">
+      ×
+    </button>
+
+    <div class="lab-window-top">
+
+      <span class="eyebrow">
+        CYBER LAB
+      </span>
+
+      <span id="labDifficulty">
+        Beginner
+      </span>
+
+    </div>
+
+    <h2 id="labTitle">
+      Linux Fundamentals
+    </h2>
+
+    <p id="labDescription">
+      Complete the task below.
+    </p>
+
+
+    <div class="task-box">
+
+      <div class="task-label">
+        TASK
+      </div>
+
+      <h3 id="taskQuestion">
+        Loading task...
+      </h3>
+
+    </div>
+
+
+    <div class="answer-area">
+
+      <label>
+        YOUR ANSWER
+      </label>
+
+      <textarea
+        id="labAnswer"
+        placeholder="Type your answer here..."
+        spellcheck="false">
+      </textarea>
+
+
+      <div class="file-upload">
+
+        <label for="answerFile">
+          📎 Attach .txt answer
+        </label>
+
+        <input
+          type="file"
+          id="answerFile"
+          accept=".txt">
+
+        <span id="fileName">
+          No file selected
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="lab-feedback"
+      id="labFeedback">
+    </div>
+
+
+    <div class="lab-actions">
+
+      <button
+        class="btn ghost"
+        id="hintButton">
+
+        💡 Hint
+
+      </button>
+
+      <button
+        class="btn primary"
+        id="checkAnswer">
+
+        Check Answer →
+
+      </button>
+
+    </div>
+
+
+    <div
+      class="hint-box"
+      id="hintBox">
+    </div>
+
+  </div>
+
+</div>
     </section>
 
 
