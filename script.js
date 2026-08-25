@@ -1,945 +1,406 @@
+const SUPABASE_URL = "ТВОЙ_SUPABASE_URL";
+const SUPABASE_KEY = "ТВОЙ_PUBLISHABLE_KEY";
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="script.js"></script>
-  const SUPABASE_URL =
-  "sb_publishable_6VIKlQsd9SxO5jEvm0wWCg_-wgdGLLo";
+const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
-const SUPABASE_KEY =
-  "sb_publishable_6VIKlQsd9SxO5jEvm0wWCg_-wgdGLLo";
-const labs = {
-
-  linux: {
-    title: "Linux Fundamentals",
-    diff: "BEGINNER",
-    desc: "Master the Linux command line, filesystem, permissions and processes.",
-    tasks: [
-      ["Navigate the filesystem", "Practice pwd, ls, cd and find."],
-      ["Manage files", "Create, copy, move and remove files in your own lab."],
-      ["Understand permissions", "Explore chmod, chown and ls -la."],
-      ["Inspect processes", "Use ps, top and system tools to understand running processes."]
-    ]
-  },
-
-  network: {
-    title: "Network Fundamentals",
-    diff: "BEGINNER",
-    desc: "Understand how devices communicate and how analysts inspect a network.",
-    tasks: [
-      ["IP basics", "Learn addresses, masks, gateways and interfaces."],
-      ["Connectivity", "Practice ping and traceroute against systems you control."],
-      ["Ports & protocols", "Understand TCP, UDP and common service ports."],
-      ["DNS", "Follow a DNS request from your machine to a resolver."]
-    ]
-  },
-
-  web: {
-    title: "Web Security",
-    diff: "INTERMEDIATE",
-    desc: "Explore web security concepts safely inside authorized practice environments.",
-    tasks: [
-      ["HTTP", "Inspect requests, responses, headers and cookies."],
-      ["Authentication", "Understand how login and session systems work."],
-      ["Input validation", "Learn why applications must validate untrusted input."],
-      ["OWASP", "Study common web security risks and mitigations."]
-    ]
-  },
-
-  python: {
-    title: "Python Security",
-    diff: "INTERMEDIATE",
-    desc: "Use Python to automate safe defensive and analysis tasks.",
-    tasks: [
-      ["Files & data", "Read and transform structured data."],
-      ["Sockets", "Understand basic network programming concepts."],
-      ["Log parser", "Build a small defensive log-analysis utility."],
-      ["Automation", "Automate a repetitive lab workflow."]
-    ]
-  },
-
-  packets: {
-    title: "Packet Analysis",
-    diff: "INTERMEDIATE",
-    desc: "Learn to read network traffic and reason about protocols.",
-    tasks: [
-      ["Capture", "Capture traffic in your own test environment."],
-      ["Filters", "Use filters to isolate useful packets."],
-      ["TCP", "Inspect handshakes, flags and connections."],
-      ["DNS analysis", "Identify DNS queries and responses."]
-    ]
-  },
-
-  blue: {
-    title: "Blue Team Basics",
-    diff: "ADVANCED",
-    desc: "Learn monitoring, detection and incident-response fundamentals.",
-    tasks: [
-      ["Logs", "Identify security-relevant system events."],
-      ["Indicators", "Learn what suspicious activity can look like."],
-      ["Alerts", "Understand how detection rules produce alerts."],
-      ["Response", "Learn the basic incident-response lifecycle."]
-    ]
-  }
-
-};
+let selectedRating = 0;
 
 
-const achievements = [
+// ======================
+// STAR RATING
+// ======================
 
-  [
-    "first",
-    "FIRST STEP",
-    "Complete your first lab.",
-    "◇"
-  ],
+const stars = document.querySelectorAll(
+    "#starPicker button"
+);
 
-  [
-    "three",
-    "TRIPLE THREAT",
-    "Complete three labs.",
-    "△"
-  ],
+stars.forEach(star => {
 
-  [
-    "all",
-    "LAB MASTER",
-    "Complete every lab.",
-    "◆"
-  ],
+    star.addEventListener("click", () => {
 
-  [
-    "shell",
-    "SHELL USER",
-    "Run five terminal commands.",
-    "$"
-  ]
+        selectedRating =
+            Number(star.dataset.rating);
 
-];
+        stars.forEach(s => {
 
+            const rating =
+                Number(s.dataset.rating);
 
-const $ = selector =>
-  document.querySelector(selector);
+            s.classList.toggle(
+                "selected",
+                rating <= selectedRating
+            );
 
-const $$ = selector =>
-  [...document.querySelectorAll(selector)];
+        });
+
+    });
+
+});
 
 
-let data = JSON.parse(
-  localStorage.getItem("mcl_v4") ||
-  '{"labs":{},"ach":{},"commands":0}'
+// ======================
+// CHARACTER COUNTER
+// ======================
+
+const commentInput =
+    document.getElementById(
+        "reviewComment"
+    );
+
+const charCount =
+    document.getElementById(
+        "charCount"
+    );
+
+commentInput.addEventListener(
+    "input",
+    () => {
+
+        charCount.textContent =
+            `${commentInput.value.length} / 500`;
+
+    }
 );
 
 
-function save() {
+// ======================
+// SUBMIT REVIEW
+// ======================
 
-  localStorage.setItem(
-    "mcl_v4",
-    JSON.stringify(data)
-  );
+document
+    .getElementById("submitReview")
+    .addEventListener("click", async () => {
 
-}
+        const username =
+            document
+                .getElementById("reviewName")
+                .value
+                .trim();
 
-
-function completed(id) {
-
-  return (
-    data.labs[id]?.filter(Boolean).length ||
-    0
-  );
-
-}
-
-
-function percent(id) {
-
-  return Math.round(
-    completed(id) /
-    labs[id].tasks.length *
-    100
-  );
-
-}
+        const comment =
+            commentInput
+                .value
+                .trim();
 
 
-function totalProgress() {
+        if (selectedRating === 0) {
 
-  let total = 0;
-  let done = 0;
+            alert(
+                "Please choose a star rating ⭐"
+            );
 
-  Object.keys(labs).forEach(id => {
+            return;
 
-    total += labs[id].tasks.length;
-
-    done += completed(id);
-
-  });
-
-  return total
-    ? Math.round(done / total * 100)
-    : 0;
-
-}
+        }
 
 
-function toast(message) {
+        if (username.length < 2) {
 
-  const element = $("#toast");
+            alert(
+                "Username must contain at least 2 characters."
+            );
 
-  element.textContent = message;
+            return;
 
-  element.classList.add("show");
-
-  setTimeout(() => {
-
-    element.classList.remove("show");
-
-  }, 2500);
-
-}
+        }
 
 
-/* RENDER LABS */
+        if (comment.length < 3) {
 
-function renderLabs() {
+            alert(
+                "Please write a comment."
+            );
 
-  const grid = $("#labsGrid");
+            return;
 
-  grid.innerHTML = "";
+        }
 
-  Object.entries(labs).forEach(
-    ([id, lab], index) => {
 
-      const progress = percent(id);
+        const button =
+            document.getElementById(
+                "submitReview"
+            );
 
-      grid.insertAdjacentHTML(
-        "beforeend",
+        button.disabled = true;
 
-        `
-        <article class="lab-card reveal visible
-        ${progress === 100 ? "completed" : ""}">
+        button.textContent =
+            "POSTING...";
 
-          <div class="lab-index">
-            0${index + 1} / ${lab.diff}
-          </div>
 
-          <h3>
-            ${lab.title}
-          </h3>
+        const { error } =
+            await db
+                .from("reviews")
+                .insert({
 
-          <p>
-            ${lab.desc}
-          </p>
+                    username: username,
 
-          <div class="lab-bottom">
+                    comment: comment,
 
-            <span class="lab-status">
+                    rating: selectedRating
 
-              ${
-                progress === 100
-                  ? "COMPLETED"
-                  : progress
-                    ? "IN PROGRESS"
-                    : "READY"
-              }
+                });
 
-            </span>
 
-            <div class="lab-progress">
+        if (error) {
 
-              <i style="width:${progress}%"></i>
+            console.error(error);
 
+            alert(
+                "Error: " + error.message
+            );
+
+            button.disabled = false;
+
+            button.textContent =
+                "POST REVIEW →";
+
+            return;
+
+        }
+
+
+        alert(
+            "Review posted! 🔥"
+        );
+
+
+        document
+            .getElementById("reviewName")
+            .value = "";
+
+        commentInput.value = "";
+
+        charCount.textContent =
+            "0 / 500";
+
+
+        selectedRating = 0;
+
+        stars.forEach(s =>
+            s.classList.remove("selected")
+        );
+
+
+        button.disabled = false;
+
+        button.textContent =
+            "POST REVIEW →";
+
+
+        loadReviews();
+
+    });
+
+
+// ======================
+// LOAD REVIEWS
+// ======================
+
+async function loadReviews() {
+
+    const list =
+        document.getElementById(
+            "reviewsList"
+        );
+
+
+    const { data, error } =
+        await db
+            .from("reviews")
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(error);
+
+        list.innerHTML = `
+            <div class="review-error">
+                Could not load reviews.
             </div>
+        `;
 
-            <button
-              class="lab-open"
-              data-open="${id}">
-
-              ${
-                progress === 100
-                  ? "REVIEW LAB"
-                  : "OPEN LAB →"
-              }
-
-            </button>
-
-          </div>
-
-        </article>
-        `
-      );
+        return;
 
     }
-  );
 
 
-  $("#labCount").textContent =
-    `${Object.keys(labs).length} LABS`;
+    if (!data || data.length === 0) {
 
+        list.innerHTML = `
+            <div class="review-empty">
+                No reviews yet.<br>
+                Be the first one! 👀
+            </div>
+        `;
 
-  $$("#labsGrid [data-open]")
-    .forEach(button => {
+        updateRating([]);
 
-      button.onclick = () =>
-        openLab(button.dataset.open);
-
-    });
-
-
-  updateOverall();
-  updateHero();
-
-}
-
-
-/* PROGRESS */
-
-function updateOverall() {
-
-  const progress =
-    totalProgress();
-
-  $("#overallText")
-    .textContent =
-    progress + "%";
-
-  $("#overallBar")
-    .style.width =
-    progress + "%";
-
-}
-
-
-function updateHero() {
-
-  $("#heroLabs")
-    .textContent =
-    Object.keys(labs).length;
-
-  $("#heroProgress")
-    .textContent =
-    totalProgress() + "%";
-
-}
-
-
-/* LAB MODAL */
-
-let current = null;
-
-
-function openLab(id) {
-
-  current = id;
-
-  const lab = labs[id];
-
-  const saved =
-    data.labs[id] || [];
-
-
-  $("#modalTitle")
-    .textContent =
-    lab.title;
-
-  $("#modalDifficulty")
-    .textContent =
-    lab.diff;
-
-  $("#modalDescription")
-    .textContent =
-    lab.desc;
-
-
-  $("#taskList").innerHTML =
-    lab.tasks
-      .map(
-        (task, index) =>
-
-        `
-        <label class="task
-        ${saved[index] ? "done" : ""}">
-
-          <input
-            type="checkbox"
-            data-task="${index}"
-            ${saved[index] ? "checked" : ""}>
-
-          <div>
-
-            <h4>
-              ${task[0]}
-            </h4>
-
-            <p>
-              ${task[1]}
-            </p>
-
-          </div>
-
-        </label>
-        `
-      )
-      .join("");
-
-
-  $("#labModal")
-    .classList
-    .add("open");
-
-
-  $("#labModal")
-    .setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-
-  updateModal();
-
-
-  $$("#taskList input")
-    .forEach(input => {
-
-      input.onchange = () => {
-
-        if (!data.labs[id])
-          data.labs[id] = [];
-
-
-        data.labs[id][
-          +input.dataset.task
-        ] = input.checked;
-
-
-        input
-          .closest(".task")
-          .classList
-          .toggle(
-            "done",
-            input.checked
-          );
-
-
-        save();
-
-        updateModal();
-
-        renderLabs();
-
-        checkAchievements();
-
-      };
-
-    });
-
-}
-
-
-function updateModal() {
-
-  const progress =
-    percent(current);
-
-  $("#modalPercent")
-    .textContent =
-    progress + "%";
-
-  $("#modalBar")
-    .style.width =
-    progress + "%";
-
-}
-
-
-function closeModal() {
-
-  $("#labModal")
-    .classList
-    .remove("open");
-
-  $("#labModal")
-    .setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
-  current = null;
-
-}
-
-
-$("#modalClose")
-  .onclick =
-  closeModal;
-
-
-$("#labModal").onclick =
-  event => {
-
-    if (
-      event.target.id ===
-      "labModal"
-    ) {
-
-      closeModal();
-
-    }
-
-  };
-
-
-$("#finishLab").onclick = () => {
-
-  if (percent(current) < 100) {
-
-    toast(
-      "Finish every task first 😭"
-    );
-
-    return;
-
-  }
-
-
-  data.ach[current] = true;
-
-  save();
-
-  toast(
-    "LAB COMPLETED ✓"
-  );
-
-  checkAchievements();
-
-  setTimeout(
-    closeModal,
-    500
-  );
-
-};
-
-
-/* ACHIEVEMENTS */
-
-function checkAchievements() {
-
-  const finished =
-    Object.keys(labs)
-      .filter(
-        id =>
-          percent(id) === 100
-      )
-      .length;
-
-
-  if (
-    Object.values(data.labs)
-      .some(
-        x =>
-          x?.length &&
-          x.some(Boolean)
-      )
-  ) {
-
-    data.ach.first = true;
-
-  }
-
-
-  if (finished >= 3) {
-
-    data.ach.three = true;
-
-  }
-
-
-  if (
-    finished ===
-    Object.keys(labs).length
-  ) {
-
-    data.ach.all = true;
-
-  }
-
-
-  if (data.commands >= 5) {
-
-    data.ach.shell = true;
-
-  }
-
-
-  save();
-
-  renderAchievements();
-
-}
-
-
-function renderAchievements() {
-
-  $("#achievementsGrid").innerHTML =
-    achievements
-      .map(
-        achievement =>
-
-        `
-        <article class="achievement
-        ${
-          data.ach[achievement[0]]
-            ? "unlocked"
-            : ""
-        }">
-
-          <div class="achievement-icon">
-            ${achievement[3]}
-          </div>
-
-          <h3>
-            ${achievement[1]}
-          </h3>
-
-          <small>
-            ${achievement[2]}
-          </small>
-
-          <span class="achievement-status">
-
-            ${
-              data.ach[achievement[0]]
-                ? "UNLOCKED"
-                : "LOCKED"
-            }
-
-          </span>
-
-        </article>
-        `
-      )
-      .join("");
-
-}
-
-
-/* TERMINAL */
-
-const output =
-  $("#terminalOutput");
-
-
-function out(
-  text,
-  className = ""
-) {
-
-  const element =
-    document.createElement("div");
-
-  element.className =
-    className;
-
-  element.textContent =
-    text;
-
-  output.appendChild(
-    element
-  );
-
-  output.scrollTop =
-    output.scrollHeight;
-
-}
-
-
-function command(commandText) {
-
-  data.commands++;
-
-  save();
-
-
-  out(
-    "vlad@cyberlab:~$ " +
-    commandText,
-    "cmd"
-  );
-
-
-  const command =
-    commandText
-      .trim()
-      .toLowerCase();
-
-
-  if (command === "help") {
-
-    out(
-      "help  about  labs  skills  status  progress  clear",
-      "ok"
-    );
-
-  }
-
-
-  else if (command === "about") {
-
-    out(
-      "Vlad — 16-year-old cybersecurity learner focused on Linux, networking, web security and Python.",
-      "ok"
-    );
-
-  }
-
-
-  else if (command === "labs") {
-
-    Object.values(labs)
-      .forEach(
-        lab => {
-
-          out(
-            "• " +
-            lab.title +
-            " [" +
-            lab.diff +
-            "]"
-          );
-
-        }
-      );
-
-  }
-
-
-  else if (command === "skills") {
-
-    out(
-      "Linux | Networking | Web Security | Python | Packet Analysis | Blue Team",
-      "ok"
-    );
-
-  }
-
-
-  else if (command === "status") {
-
-    out(
-      "SYSTEM ONLINE / LABS OPERATIONAL / LOCAL STORAGE ACTIVE",
-      "ok"
-    );
-
-  }
-
-
-  else if (command === "progress") {
-
-    out(
-      "Overall progress: " +
-      totalProgress() +
-      "%",
-      "ok"
-    );
-
-  }
-
-
-  else if (command === "clear") {
-
-    output.innerHTML = "";
-
-  }
-
-
-  else if (
-    command === "hack" ||
-    command === "sudo"
-  ) {
-
-    out(
-      "Nice try 😭 Use the interactive labs for authorized practice.",
-      "err"
-    );
-
-  }
-
-
-  else {
-
-    out(
-      "Command not found. Type 'help'.",
-      "err"
-    );
-
-  }
-
-
-  checkAchievements();
-
-}
-
-
-$("#terminalForm").onsubmit =
-  event => {
-
-    event.preventDefault();
-
-    const input =
-      $("#terminalInput");
-
-
-    if (
-      input.value.trim()
-    ) {
-
-      command(
-        input.value
-      );
-
-      input.value = "";
-
-    }
-
-  };
-
-
-/* HERO TYPING */
-
-const phrases = [
-
-  "boot lab --secure",
-  "scan --local-environment",
-  "load learning.modules",
-  "status --all"
-
-];
-
-
-let phraseIndex = 0;
-let charIndex = 0;
-
-
-function typeHero() {
-
-  const text =
-    phrases[phraseIndex];
-
-
-  $("#heroType")
-    .textContent =
-    text.slice(
-      0,
-      charIndex++
-    );
-
-
-  if (
-    charIndex >
-    text.length
-  ) {
-
-    setTimeout(
-      () => {
-
-        charIndex = 0;
-
-        phraseIndex =
-          (phraseIndex + 1)
-          % phrases.length;
-
-      },
-      1200
-    );
-
-  }
-
-
-  setTimeout(
-    typeHero,
-    55
-  );
-
-}
-
-
-/* SCROLL ANIMATIONS */
-
-$$(".reveal")
-  .forEach(element => {
-
-    const observer =
-      new IntersectionObserver(
-        entries => {
-
-          entries.forEach(
-            entry => {
-
-              if (
-                entry.isIntersecting
-              ) {
-
-                entry.target
-                  .classList
-                  .add("visible");
-
-              }
-
-            }
-          );
-
-        },
-        {
-          threshold: .12
-        }
-      );
-
-
-    observer.observe(element);
-
-  });
-
-
-/* STARTUP */
-
-$("#year")
-  .textContent =
-  new Date()
-    .getFullYear();
-
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key ===
-      "Escape"
-    ) {
-
-      closeModal();
+        return;
 
     }
 
 
-    if (
-      event.key === "/" &&
-      !event.ctrlKey
-    ) {
+    list.innerHTML =
+        data.map(review => {
 
-      event.preventDefault();
+            const stars =
+                "★".repeat(review.rating) +
+                "☆".repeat(5 - review.rating);
 
-      $("#terminalInput")
-        .focus();
+
+            const date =
+                new Date(
+                    review.created_at
+                ).toLocaleDateString();
+
+
+            return `
+                <div class="review-card">
+
+                    <div class="review-card-top">
+
+                        <div>
+                            <div class="review-user">
+                                ${escapeHTML(
+                                    review.username
+                                )}
+                            </div>
+
+                            <div class="review-date">
+                                ${date}
+                            </div>
+                        </div>
+
+                        <div class="review-stars">
+                            ${stars}
+                        </div>
+
+                    </div>
+
+                    <p>
+                        ${escapeHTML(
+                            review.comment
+                        )}
+                    </p>
+
+                </div>
+            `;
+
+        }).join("");
+
+
+    updateRating(data);
+
+}
+
+
+// ======================
+// UPDATE RATING
+// ======================
+
+function updateRating(reviews) {
+
+    const averageElement =
+        document.getElementById(
+            "averageRating"
+        );
+
+    const starsElement =
+        document.getElementById(
+            "averageStars"
+        );
+
+    const countElement =
+        document.getElementById(
+            "reviewCount"
+        );
+
+
+    if (reviews.length === 0) {
+
+        averageElement.textContent =
+            "0.0";
+
+        starsElement.textContent =
+            "☆☆☆☆☆";
+
+        countElement.textContent =
+            "0 reviews";
+
+        return;
 
     }
 
-  }
-);
+
+    const average =
+        reviews.reduce(
+            (sum, review) =>
+                sum + review.rating,
+            0
+        ) / reviews.length;
 
 
-typeHero();
+    const rounded =
+        Math.round(average);
 
-renderLabs();
 
-renderAchievements();
+    averageElement.textContent =
+        average.toFixed(1);
 
-checkAchievements();
+
+    starsElement.textContent =
+        "★".repeat(rounded) +
+        "☆".repeat(5 - rounded);
+
+
+    countElement.textContent =
+        `${reviews.length} ${
+            reviews.length === 1
+                ? "review"
+                : "reviews"
+        }`;
+
+}
+
+
+// ======================
+// SECURITY
+// ======================
+
+function escapeHTML(text) {
+
+    return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+// ======================
+// REFRESH
+// ======================
+
+document
+    .getElementById("refreshReviews")
+    .addEventListener(
+        "click",
+        loadReviews
+    );
+
+
+// START
+
+loadReviews();
