@@ -1,3 +1,8 @@
+const SUPABASE_URL =
+  "sb_publishable_6VIKlQsd9SxO5jEvm0wWCg_-wgdGLLo";
+
+const SUPABASE_KEY =
+  "sb_publishable_6VIKlQsd9SxO5jEvm0wWCg_-wgdGLLo";
 const labs = {
 
   linux: {
