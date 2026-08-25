@@ -1,4 +1,7 @@
-const SUPABASE_URL =
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+  const SUPABASE_URL =
   "sb_publishable_6VIKlQsd9SxO5jEvm0wWCg_-wgdGLLo";
 
 const SUPABASE_KEY =
