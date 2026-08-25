@@ -1,250 +1,459 @@
-const $ = selector => document.querySelector(selector);
-const $$ = selector => document.querySelectorAll(selector);
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
 
 
-// LOADER
+// ================================
+// BOOT SCREEN
+// ================================
 
-window.addEventListener("load", () => {
+const loader = $("#loader");
+const bootBar = $(".boot-bar span");
+const bootText = $("#bootText");
 
-  const loader = $(".loader");
-  const bar = $(".loader-line i");
-
-  setTimeout(() => {
-    bar.style.width = "100%";
-  }, 100);
-
-  setTimeout(() => {
-    loader.classList.add("done");
-  }, 1900);
-
-});
-
-
-// MOBILE MENU
-
-const nav = $(".nav");
-const menu = $(".menu");
-
-menu.onclick = () => {
-  nav.classList.toggle("open");
-};
-
-$$(".nav nav a").forEach(link => {
-
-  link.onclick = () => {
-    nav.classList.remove("open");
-  };
-
-});
-
-
-// TERMINAL TYPING
-
-const typed = $("#typed");
-const output = $("#termOutput");
-
-const commands = [
-  "neofetch",
-  "whoami",
-  "cat about.txt",
-  "echo 'keep learning'",
-  "./start-lab.sh"
+const bootMessages = [
+  "Loading modules...",
+  "Checking cyber systems...",
+  "Starting learning environment...",
+  "Initializing dashboard...",
+  "SYSTEM READY"
 ];
 
-let commandIndex = 0;
-let position = 0;
-let deleting = false;
+let bootIndex = 0;
 
-const outputs = {
+const bootInterval = setInterval(() => {
 
-  "neofetch": `
-    <p class="green">OS: Kali GNU/Linux Rolling</p>
-    <p>Shell: bash</p>
-    <p>Focus: cybersecurity</p>
-  `,
+  bootText.textContent = bootMessages[bootIndex++];
 
-  "whoami": `
-    <p class="green">vlad // cybersecurity enthusiast</p>
-    <p class="muted">16 years old • learning every day</p>
-  `,
+  if(bootIndex >= bootMessages.length){
+    clearInterval(bootInterval);
+  }
 
-  "cat about.txt": `
-    <p class="green">[+] Welcome to My Cyber Lab.</p>
-    <p class="muted">Build. Learn. Improve.</p>
-  `,
+}, 400);
 
-  "echo 'keep learning'": `
-    <p class="cyan">keep learning 🚀</p>
-  `,
+setTimeout(() => {
+  bootBar.style.width = "100%";
+}, 100);
 
-  "./start-lab.sh": `
-    <p class="green">[ OK ] Starting authorized learning environment...</p>
-    <p class="cyan">Ready.</p>
-  `
+setTimeout(() => {
+  loader.classList.add("hide");
+}, 2300);
+
+
+// ================================
+// MOBILE MENU
+// ================================
+
+const menuBtn = $("#menuBtn");
+const navbar = $(".navbar");
+
+menuBtn.addEventListener("click", () => {
+  navbar.classList.toggle("open");
+});
+
+$$(".navbar nav a").forEach(link => {
+
+  link.addEventListener("click", () => {
+    navbar.classList.remove("open");
+  });
+
+});
+
+
+// ================================
+// PARTICLES
+// ================================
+
+const particles = $("#particles");
+
+for(let i = 0; i < 45; i++){
+
+  const p = document.createElement("i");
+
+  p.className = "particle";
+
+  p.style.left =
+    Math.random() * 100 + "%";
+
+  p.style.top =
+    85 + Math.random() * 30 + "%";
+
+  p.style.animationDuration =
+    8 + Math.random() * 15 + "s";
+
+  p.style.animationDelay =
+    Math.random() * 10 + "s";
+
+  particles.appendChild(p);
+
+}
+
+
+// ================================
+// REVEAL ANIMATIONS
+// ================================
+
+const revealObserver =
+  new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+      if(entry.isIntersecting){
+
+        entry.target.classList.add("show");
+
+      }
+
+    });
+
+  },{
+    threshold:.12
+  });
+
+
+$$(".reveal").forEach(el => {
+  revealObserver.observe(el);
+});
+
+
+// ================================
+// ACTIVE NAV
+// ================================
+
+const sections = $$("section[id]");
+
+const sectionObserver =
+  new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+      if(!entry.isIntersecting) return;
+
+      $$(".navbar nav a").forEach(link => {
+
+        link.classList.remove("active");
+
+        if(
+          link.getAttribute("href") ===
+          "#" + entry.target.id
+        ){
+
+          link.classList.add("active");
+
+        }
+
+      });
+
+    });
+
+  },{
+    threshold:.45
+  });
+
+
+sections.forEach(section => {
+  sectionObserver.observe(section);
+});
+
+
+// ================================
+// LAB MODALS
+// ================================
+
+const modal = $("#labModal");
+const closeModal = $("#closeModal");
+
+const modalCode = $("#modalCode");
+const modalTitle = $("#modalTitle");
+const modalText = $("#modalText");
+const modalItems = $("#modalItems");
+
+const labs = {
+
+  linux:{
+    code:"LAB_001",
+    title:"LINUX LAB",
+    text:"A safe environment for learning Linux fundamentals and system administration.",
+    items:[
+      "Terminal & Bash",
+      "Files and permissions",
+      "Processes",
+      "Users and groups",
+      "Package management"
+    ]
+  },
+
+  network:{
+    code:"LAB_002",
+    title:"NETWORK LAB",
+    text:"Learn how computers communicate and how network traffic can be analyzed.",
+    items:[
+      "TCP/IP",
+      "DNS",
+      "Ports",
+      "Services",
+      "Packet analysis"
+    ]
+  },
+
+  web:{
+    code:"LAB_003",
+    title:"WEB LAB",
+    text:"Explore how modern web applications work and how developers secure them.",
+    items:[
+      "HTTP",
+      "Cookies",
+      "Sessions",
+      "Authentication",
+      "Secure coding"
+    ]
+  },
+
+  ctf:{
+    code:"LAB_004",
+    title:"CTF LAB",
+    text:"Practice cybersecurity concepts through legal and authorized challenges.",
+    items:[
+      "Linux challenges",
+      "Web challenges",
+      "Cryptography",
+      "Forensics",
+      "Problem solving"
+    ]
+  }
 
 };
 
 
-function typeTerminal(){
+$$(".lab-card").forEach(card => {
 
-  const command = commands[commandIndex];
+  card.querySelector("button").addEventListener("click", () => {
 
-  if(!deleting){
+    const data =
+      labs[card.dataset.lab];
 
-    typed.textContent = command.slice(0, position++);
+    modalCode.textContent = data.code;
+    modalTitle.textContent = data.title;
+    modalText.textContent = data.text;
 
-    if(position > command.length){
+    modalItems.innerHTML = "";
 
-      deleting = true;
+    data.items.forEach(item => {
 
-      output.innerHTML = outputs[command];
+      const el =
+        document.createElement("div");
 
-      setTimeout(typeTerminal, 1100);
+      el.className = "modal-item";
 
-    }else{
+      el.textContent =
+        "[+] " + item;
 
-      setTimeout(typeTerminal, 55);
+      modalItems.appendChild(el);
 
-    }
+    });
 
-  }else{
+    modal.classList.add("open");
 
-    typed.textContent = command.slice(0, --position);
+  });
 
-    if(position <= 0){
+});
 
-      deleting = false;
 
-      commandIndex =
-        (commandIndex + 1) % commands.length;
+closeModal.addEventListener("click", () => {
+  modal.classList.remove("open");
+});
 
-      setTimeout(typeTerminal, 250);
+modal.addEventListener("click", event => {
 
-    }else{
+  if(event.target === modal){
+    modal.classList.remove("open");
+  }
 
-      setTimeout(typeTerminal, 25);
+});
 
-    }
+
+// ================================
+// WEB TERMINAL
+// ================================
+
+const terminalInput = $("#terminalInput");
+const terminalOutput = $("#terminalOutput");
+
+function print(text, className=""){
+
+  const p = document.createElement("p");
+
+  p.className = className;
+
+  p.innerHTML = text;
+
+  terminalOutput.appendChild(p);
+
+  terminalOutput.scrollTop =
+    terminalOutput.scrollHeight;
+}
+
+
+function runCommand(command){
+
+  const cmd =
+    command.trim().toLowerCase();
+
+  print(
+    `vlad@cyberlab:~$ ${command}`,
+    "cyan"
+  );
+
+  if(cmd === "help"){
+
+    print(`
+      <span class="green">Available commands:</span><br>
+      about<br>
+      skills<br>
+      projects<br>
+      labs<br>
+      status<br>
+      github<br>
+      clear
+    `);
+
+  }
+
+  else if(cmd === "about"){
+
+    print(
+      "Vlad // 16 // cybersecurity enthusiast."
+    );
+
+  }
+
+  else if(cmd === "skills"){
+
+    print(`
+      <span class="green">SKILLS</span><br>
+      Linux ........ 88%<br>
+      Networking ... 72%<br>
+      Web Security . 65%<br>
+      CTF .......... 55%<br>
+      Defense ...... 42%
+    `);
+
+  }
+
+  else if(cmd === "projects"){
+
+    print(`
+      <span class="green">PROJECTS</span><br>
+      P-001 My Cyber Lab<br>
+      P-002 Home Cyber Lab<br>
+      P-003 Future Project
+    `);
+
+  }
+
+  else if(cmd === "labs"){
+
+    print(`
+      <span class="green">LAB STATUS</span><br>
+      Linux Lab ..... ONLINE<br>
+      Network Lab ... ONLINE<br>
+      Web Lab ....... ONLINE<br>
+      CTF Lab ....... READY
+    `);
+
+  }
+
+  else if(cmd === "status"){
+
+    print(
+      "<span class='green'>SYSTEM ONLINE — LEARNING MODE ACTIVE.</span>"
+    );
+
+  }
+
+  else if(cmd === "github"){
+
+    print(
+      "Opening GitHub..."
+    );
+
+    setTimeout(() => {
+
+      window.open(
+        "https://github.com/",
+        "_blank"
+      );
+
+    },500);
+
+  }
+
+  else if(cmd === "clear"){
+
+    terminalOutput.innerHTML = "";
+
+  }
+
+  else if(cmd === ""){
+
+    return;
+
+  }
+
+  else{
+
+    print(
+      `command not found: ${command}. Type <span class="green">help</span>.`
+    );
 
   }
 
 }
 
-typeTerminal();
 
+terminalInput.addEventListener("keydown", event => {
 
-// PARTICLES
+  if(event.key === "Enter"){
 
-const particles = $("#particles");
+    runCommand(
+      terminalInput.value
+    );
 
-for(let i = 0; i < 40; i++){
+    terminalInput.value = "";
 
-  const particle = document.createElement("i");
-
-  particle.className = "particle";
-
-  particle.style.left =
-    Math.random() * 100 + "%";
-
-  particle.style.top =
-    85 + Math.random() * 30 + "%";
-
-  particle.style.animationDuration =
-    8 + Math.random() * 15 + "s";
-
-  particle.style.animationDelay =
-    Math.random() * 12 + "s";
-
-  particles.appendChild(particle);
-
-}
-
-
-// SCROLL REVEAL
-
-const revealObserver =
-  new IntersectionObserver(
-    entries => {
-
-      entries.forEach(entry => {
-
-        if(entry.isIntersecting){
-
-          entry.target.classList.add("show");
-
-        }
-
-      });
-
-    },
-    {
-      threshold: .12
-    }
-  );
-
-
-$$(".reveal").forEach(element => {
-
-  revealObserver.observe(element);
+  }
 
 });
 
 
-// NUMBER COUNTERS
+// ================================
+// TERMINAL SHORTCUT
+// ================================
 
-const counters =
-  $$(".stats b[data-count]");
+document.addEventListener("keydown", event => {
 
-const counterObserver =
-  new IntersectionObserver(
-    entries => {
+  if(
+    event.key === "~" &&
+    document.activeElement !== terminalInput
+  ){
 
-      entries.forEach(entry => {
-
-        if(
-          entry.isIntersecting &&
-          !entry.target.dataset.done
-        ){
-
-          entry.target.dataset.done = "true";
-
-          const target =
-            Number(entry.target.dataset.count);
-
-          let current = 0;
-
-          const interval =
-            setInterval(() => {
-
-              current++;
-
-              entry.target.textContent =
-                current;
-
-              if(current >= target){
-
-                clearInterval(interval);
-
-              }
-
-            }, 70);
-
-        }
-
+    document
+      .getElementById("terminal")
+      .scrollIntoView({
+        behavior:"smooth"
       });
 
-    }
-  );
+    setTimeout(() => {
+      terminalInput.focus();
+    },500);
 
-
-counters.forEach(counter => {
-
-  counterObserver.observe(counter);
+  }
 
 });
 
 
+// ================================
 // CUSTOM CURSOR
+// ================================
 
 const cursor = $(".cursor");
 const cursorDot = $(".cursor-dot");
@@ -266,66 +475,120 @@ window.addEventListener("mousemove", event => {
 });
 
 
-$$("a, button, .lab-card, .tool")
-.forEach(element => {
+$$("a,button,.lab-card,.skill-node,.achievement")
+.forEach(el => {
 
-  element.addEventListener("mouseenter", () => {
+  el.addEventListener("mouseenter", () => {
 
-    cursor.style.width = "45px";
-    cursor.style.height = "45px";
+    cursor.style.width = "44px";
+    cursor.style.height = "44px";
 
   });
 
-  element.addEventListener("mouseleave", () => {
+  el.addEventListener("mouseleave", () => {
 
-    cursor.style.width = "28px";
-    cursor.style.height = "28px";
+    cursor.style.width = "27px";
+    cursor.style.height = "27px";
 
   });
 
 });
 
 
-// SMOOTH ACTIVE NAV
+// ================================
+// LANGUAGE SWITCHER
+// ================================
 
-const sections = $$("section[id]");
+const langBtn = $("#langBtn");
 
-const sectionObserver =
-  new IntersectionObserver(
-    entries => {
+let language = "EN";
 
-      entries.forEach(entry => {
+langBtn.addEventListener("click", () => {
 
-        if(entry.isIntersecting){
+  language =
+    language === "EN" ? "RU" :
+    language === "RU" ? "NL" :
+    language === "NL" ? "UA" :
+    "EN";
 
-          $$(".nav nav a").forEach(link => {
+  langBtn.textContent = language;
 
-            link.classList.remove("active");
+  const messages = {
 
-            if(
-              link.getAttribute("href") ===
-              "#" + entry.target.id
-            ){
+    EN:"Language: English",
+    RU:"Язык: Русский",
+    NL:"Taal: Nederlands",
+    UA:"Мова: Українська"
 
-              link.classList.add("active");
+  };
 
-            }
-
-          });
-
-        }
-
-      });
-
-    },
-    {
-      threshold: .45
-    }
+  print(
+    `<span class="green">${messages[language]}</span>`
   );
 
+});
 
-sections.forEach(section => {
 
-  sectionObserver.observe(section);
+// ================================
+// EASTER EGG
+// KONAMI CODE
+// ================================
+
+const egg = $("#egg");
+const closeEgg = $("#closeEgg");
+
+const secret = [
+  "ArrowUp",
+  "ArrowUp",
+  "ArrowDown",
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+  "ArrowLeft",
+  "ArrowRight"
+];
+
+let secretIndex = 0;
+
+document.addEventListener("keydown", event => {
+
+  if(event.key === secret[secretIndex]){
+
+    secretIndex++;
+
+    if(secretIndex === secret.length){
+
+      egg.classList.add("open");
+
+      secretIndex = 0;
+
+    }
+
+  }else{
+
+    secretIndex = 0;
+
+  }
+
+});
+
+
+closeEgg.addEventListener("click", () => {
+  egg.classList.remove("open");
+});
+
+
+// ================================
+// ESC CLOSE
+// ================================
+
+document.addEventListener("keydown", event => {
+
+  if(event.key === "Escape"){
+
+    modal.classList.remove("open");
+    egg.classList.remove("open");
+
+  }
 
 });
