@@ -30,60 +30,170 @@ const labs = [
 
   {
     id: "web",
+
     icon: "🌐",
+
     title: "Web Security Basics",
-    desc: "Learn the foundations of HTTP, cookies, headers and common web-security concepts.",
+
+    desc:
+      "Learn the foundations of HTTP, cookies and web security.",
+
     xp: 100,
-    diff: "Beginner"
+
+    diff: "Beginner",
+
+    task:
+      "What HTTP status code means that a resource was not found?",
+
+    answers: [
+      "404",
+      "http 404",
+      "status 404"
+    ],
+
+    hint:
+      "It is the famous 'Not Found' status code."
   },
+
 
   {
     id: "linux",
+
     icon: "🐧",
+
     title: "Linux Fundamentals",
-    desc: "Practice safe command-line navigation, permissions and process inspection.",
+
+    desc:
+      "Practice safe command-line navigation, permissions and process inspection.",
+
     xp: 120,
-    diff: "Beginner"
+
+    diff: "Beginner",
+
+    task:
+      "What Linux command lists all files in the current directory, including hidden files?",
+
+    answers: [
+      "ls -la",
+      "ls -al",
+      "ls --all",
+      "ls -a"
+    ],
+
+    hint:
+      "Think about the ls command and the option that shows hidden files."
   },
+
 
   {
     id: "network",
+
     icon: "📡",
+
     title: "Networking Basics",
-    desc: "Understand IP addresses, ports, DNS and how packets move between systems.",
+
+    desc:
+      "Understand IP addresses, ports, DNS and basic networking.",
+
     xp: 130,
-    diff: "Beginner"
+
+    diff: "Beginner",
+
+    task:
+      "What protocol translates domain names such as example.com into IP addresses?",
+
+    answers: [
+      "dns",
+      "domain name system"
+    ],
+
+    hint:
+      "It works like the internet's phone book."
   },
+
 
   {
     id: "crypto",
+
     icon: "🔐",
+
     title: "Cryptography",
-    desc: "Explore hashing, encryption, keys and secure password storage.",
+
+    desc:
+      "Explore hashing, encryption and secure password storage.",
+
     xp: 150,
-    diff: "Intermediate"
+
+    diff: "Intermediate",
+
+    task:
+      "What cryptographic function converts data into a fixed-length digest and is commonly used for integrity checking?",
+
+    answers: [
+      "hash",
+      "hashing",
+      "cryptographic hash"
+    ],
+
+    hint:
+      "SHA-256 is an example."
   },
+
 
   {
     id: "osint",
+
     icon: "🔎",
+
     title: "OSINT Basics",
-    desc: "Learn ethical open-source research and how to evaluate information responsibly.",
+
+    desc:
+      "Learn ethical open-source research and information verification.",
+
     xp: 140,
-    diff: "Intermediate"
+
+    diff: "Intermediate",
+
+    task:
+      "What does OSINT stand for?",
+
+    answers: [
+      "open source intelligence",
+      "open-source intelligence"
+    ],
+
+    hint:
+      "It is intelligence gathered from publicly available information."
   },
+
 
   {
     id: "ctf",
+
     icon: "🏴‍☠️",
+
     title: "CTF Starter",
-    desc: "Solve beginner-friendly security puzzles in a controlled learning environment.",
+
+    desc:
+      "Solve beginner-friendly cybersecurity puzzles.",
+
     xp: 180,
-    diff: "Intermediate"
+
+    diff: "Intermediate",
+
+    task:
+      "In cybersecurity, what does CTF usually stand for?",
+
+    answers: [
+      "capture the flag",
+      "capture-the-flag"
+    ],
+
+    hint:
+      "It is a popular format for cybersecurity competitions."
   }
 
 ];
-
 
 
 /* ================================================
@@ -308,7 +418,7 @@ function renderLabs() {
 
     button.onclick = () => {
 
-      completeLab(
+      openLab(
         button.dataset.lab
       );
 
@@ -320,41 +430,199 @@ function renderLabs() {
 
 
 
-function completeLab(id) {
+let currentLab = null;
+
+
+function openLab(id) {
 
   const lab =
     labs.find(item => item.id === id);
 
-
   if (!lab) return;
 
+  currentLab = lab;
 
-  if (
-    state.completed.includes(id)
-  ) {
 
-    toast(
-      "You already completed this lab."
+  $("#labTitle").textContent =
+    lab.title;
+
+
+  $("#labDescription").textContent =
+    lab.desc;
+
+
+  $("#labDifficulty").textContent =
+    `${lab.diff} • +${lab.xp} XP`;
+
+
+  $("#taskQuestion").textContent =
+    lab.task;
+
+
+  $("#labAnswer").value = "";
+
+
+  $("#labFeedback").textContent = "";
+
+  $("#labFeedback").className =
+    "lab-feedback";
+
+
+  $("#hintBox").textContent =
+    `💡 ${lab.hint}`;
+
+
+  $("#hintBox").classList.remove(
+    "show"
+  );
+
+
+  $("#fileName").textContent =
+    "No file selected";
+
+
+  $("#labModal").classList.add(
+    "open"
+  );
+
+
+  setTimeout(() => {
+
+    $("#labAnswer").focus();
+
+  }, 150);
+
+}
+
+
+
+function closeLab() {
+
+  $("#labModal")
+    .classList
+    .remove("open");
+
+  currentLab = null;
+
+}
+
+
+
+function normalizeAnswer(answer) {
+
+  return answer
+
+    .toLowerCase()
+
+    .trim()
+
+    .replace(/\s+/g, " ")
+
+    .replace(/[;"'`]/g, "");
+
+}
+
+
+
+function checkLabAnswer() {
+
+  if (!currentLab) return;
+
+
+  const answer =
+    normalizeAnswer(
+      $("#labAnswer").value
     );
+
+
+  const feedback =
+    $("#labFeedback");
+
+
+  if (!answer) {
+
+    feedback.className =
+      "lab-feedback wrong";
+
+    feedback.textContent =
+      "❌ Enter an answer first.";
 
     return;
 
   }
 
 
-  state.completed.push(id);
-
-  state.xp += lab.xp;
-
-
-  save();
-
-  renderLabs();
+  const correct =
+    currentLab.answers.some(
+      expected =>
+        normalizeAnswer(expected)
+        === answer
+    );
 
 
-  toast(
-    `+${lab.xp} XP — ${lab.title} completed 🔥`
-  );
+  if (correct) {
+
+    if (
+      state.completed.includes(
+        currentLab.id
+      )
+    ) {
+
+      feedback.className =
+        "lab-feedback correct";
+
+      feedback.textContent =
+        "✅ Correct! You already completed this lab.";
+
+      return;
+
+    }
+
+
+    state.completed.push(
+      currentLab.id
+    );
+
+
+    state.xp +=
+      currentLab.xp;
+
+
+    save();
+
+    renderLabs();
+
+
+    feedback.className =
+      "lab-feedback correct";
+
+    feedback.innerHTML =
+
+      `✅ <strong>Correct!</strong>
+       +${currentLab.xp} XP earned 🔥`;
+
+
+    toast(
+      `Lab completed! +${currentLab.xp} XP`
+    );
+
+
+    setTimeout(() => {
+
+      closeLab();
+
+    }, 1800);
+
+
+  } else {
+
+    feedback.className =
+      "lab-feedback wrong";
+
+    feedback.innerHTML =
+      "❌ <strong>Not quite.</strong> Try again or use the hint.";
+
+  }
 
 }
 
@@ -1200,3 +1468,87 @@ renderSkills();
 dailyChallenge();
 
 loadReviews();
+$("#closeLab").onclick =
+  closeLab;
+
+
+$("#checkAnswer").onclick =
+  checkLabAnswer;
+
+
+$("#hintButton").onclick = () => {
+
+  $("#hintBox")
+    .classList
+    .toggle("show");
+
+};
+
+
+$("#answerFile").addEventListener(
+  "change",
+  event => {
+
+    const file =
+      event.target.files[0];
+
+    if (!file) return;
+
+
+    $("#fileName").textContent =
+      file.name;
+
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload = () => {
+
+      $("#labAnswer").value =
+        reader.result;
+
+      toast(
+        "Answer loaded from file 📎"
+      );
+
+    };
+
+
+    reader.readAsText(file);
+
+  }
+);
+
+
+$("#labModal").addEventListener(
+  "click",
+  event => {
+
+    if (
+      event.target ===
+      $("#labModal")
+    ) {
+
+      closeLab();
+
+    }
+
+  }
+);
+
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      closeLab();
+
+    }
+
+  }
+);
