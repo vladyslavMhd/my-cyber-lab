@@ -1,61 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="My Cyber Lab — Vlad's cybersecurity portfolio and learning laboratory">
+<title>My Cyber Lab | Vlad</title>
 
-  <meta name="description"
-        content="My Cyber Lab — Vlad's personal cybersecurity learning laboratory.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <title>My Cyber Lab | Vlad</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
-    rel="stylesheet"
-  >
-
-  <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="noise"></div>
 <div class="cursor-glow"></div>
+<div id="particles"></div>
 
-<!-- NAVBAR -->
 <nav class="nav">
 
   <a href="#home" class="brand">
-    <span>⌬</span>
-    MY CYBER LAB
+    <span>⌬</span> MY CYBER LAB
   </a>
 
   <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#labs">Labs</a>
-    <a href="#reviews">Reviews</a>
+    <a href="#about" data-i18n="nav_about">About</a>
+    <a href="#skills" data-i18n="nav_skills">Skills</a>
+    <a href="#labs" data-i18n="nav_labs">Labs</a>
+    <a href="#projects" data-i18n="nav_projects">Projects</a>
+    <a href="#terminal" data-i18n="nav_terminal">Terminal</a>
+    <a href="#reviews" data-i18n="nav_reviews">Reviews</a>
   </div>
 
-  <a href="#labs" class="nav-cta">
-    Enter Lab ↗
-  </a>
+  <div class="nav-tools">
+    <button id="themeBtn" class="icon-btn">☾</button>
+
+    <select id="language">
+      <option value="en">EN 🇬🇧</option>
+      <option value="nl">NL 🇳🇱</option>
+      <option value="ua">UA 🇺🇦</option>
+    </select>
+
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+  </div>
 
 </nav>
 
+<div id="mobileNav" class="mobile-nav">
+  <a href="#about" data-i18n="nav_about">About</a>
+  <a href="#skills" data-i18n="nav_skills">Skills</a>
+  <a href="#labs" data-i18n="nav_labs">Labs</a>
+  <a href="#projects" data-i18n="nav_projects">Projects</a>
+  <a href="#terminal" data-i18n="nav_terminal">Terminal</a>
+  <a href="#reviews" data-i18n="nav_reviews">Reviews</a>
+</div>
 
 <main>
 
 <!-- HERO -->
+
 <section id="home" class="hero">
 
   <div class="hero-copy reveal">
 
     <div class="eyebrow">
       <span class="pulse"></span>
-      CYBERSECURITY / LEARNING / BUILDING
+      <span data-i18n="hero_status">CYBERSECURITY / LEARNING / BUILDING</span>
     </div>
 
     <h1>
@@ -64,39 +76,31 @@
       Build.
     </h1>
 
-    <p class="hero-text">
-      Welcome to my personal cyber laboratory — a place where I learn
-      cybersecurity, build projects and experiment with safe, legal
-      security challenges.
+    <p class="hero-text" data-i18n="hero_text">
+      Welcome to my personal cyber laboratory — a place where I learn cybersecurity,
+      build projects and experiment with safe, legal security challenges.
     </p>
 
     <div class="hero-actions">
-
-      <a href="#labs" class="btn primary">
-        Explore Labs →
-      </a>
-
-      <a href="#about" class="btn ghost">
-        About Me
-      </a>
-
+      <a href="#labs" class="btn primary" data-i18n="hero_labs">Explore Labs →</a>
+      <a href="#about" class="btn ghost" data-i18n="hero_about">About Me</a>
     </div>
 
     <div class="hero-stats">
 
       <div>
         <strong>16</strong>
-        <span>YEARS OLD</span>
+        <span data-i18n="age">YEARS OLD</span>
       </div>
 
       <div>
-        <strong>∞</strong>
-        <span>THINGS TO LEARN</span>
+        <strong id="heroLabs">0</strong>
+        <span data-i18n="labs_done">LABS DONE</span>
       </div>
 
       <div>
-        <strong>24/7</strong>
-        <span>CURIOUS</span>
+        <strong id="heroLevel">01</strong>
+        <span data-i18n="level">CYBER LEVEL</span>
       </div>
 
     </div>
@@ -107,53 +111,25 @@
   <div class="hero-terminal reveal">
 
     <div class="terminal-top">
-
-      <span></span>
-      <span></span>
-      <span></span>
-
+      <span></span><span></span><span></span>
       <b>vlad@cyberlab:~</b>
-
     </div>
 
     <div class="terminal-body">
 
-      <p>
-        <i>01</i>
-        <span class="green">$ whoami</span>
-      </p>
+      <p><i>01</i> <span class="green">$ whoami</span></p>
+      <p class="muted">vlad</p>
 
-      <p class="muted">
-        vlad
-      </p>
+      <p><i>02</i> <span class="green">$ systemctl status curiosity</span></p>
+      <p><span class="ok">● ACTIVE</span> — running continuously</p>
 
-      <p>
-        <i>02</i>
-        <span class="green">$ cat mission.txt</span>
-      </p>
+      <p><i>03</i> <span class="green">$ ./launch-lab</span></p>
 
-      <p class="muted">
-        learn cybersecurity. build skills. stay ethical.
-      </p>
+      <p class="cyan">[ READY ] Safe local labs available.</p>
 
-      <p>
-        <i>03</i>
-        <span class="green">$ systemctl status curiosity</span>
-      </p>
+      <p><i>04</i> <span class="green">$ echo "stay curious"</span></p>
 
-      <p>
-        <span class="ok">● ACTIVE</span>
-        — running continuously
-      </p>
-
-      <p>
-        <i>04</i>
-        <span class="green">$ ./launch-lab</span>
-      </p>
-
-      <p class="cyan">
-        [ READY ] Safe local labs available.
-      </p>
+      <p class="cyan">stay curious.</p>
 
       <span class="caret">▋</span>
 
@@ -164,28 +140,64 @@
 </section>
 
 
+<!-- DASHBOARD -->
+
+<section class="section">
+
+  <div class="dashboard reveal">
+
+    <div class="dash-status">
+      <span class="online-dot"></span>
+      <div>
+        <b data-i18n="system_online">SYSTEM ONLINE</b>
+        <small>MY-CYBER-LAB v7.0</small>
+      </div>
+    </div>
+
+    <div class="xp-box">
+      <div class="xp-top">
+        <span id="levelText">LVL 01</span>
+        <span id="xpText">0 / 100 XP</span>
+      </div>
+
+      <div class="xp-bar">
+        <span id="xpFill"></span>
+      </div>
+    </div>
+
+    <div class="dash-number">
+      <strong id="dashLabs">0</strong>
+      <small data-i18n="completed">COMPLETED</small>
+    </div>
+
+    <div class="dash-number">
+      <strong id="dashStreak">1</strong>
+      <small data-i18n="streak">DAY STREAK</small>
+    </div>
+
+  </div>
+
+</section>
+
+
 <!-- ABOUT -->
+
 <section id="about" class="section">
 
   <div class="section-head reveal">
-
     <span>01 / ABOUT</span>
 
     <h2>
       Meet the<br>
-      <em>builder.</em>
+      <em data-i18n="builder">builder.</em>
     </h2>
-
   </div>
-
 
   <div class="about-grid">
 
     <div class="about-card reveal">
 
-      <div class="avatar">
-        V
-      </div>
+      <div class="avatar">V</div>
 
       <h3>Vlad</h3>
 
@@ -194,32 +206,26 @@
       </p>
 
       <div class="tag-row">
-
         <span>CYBERSECURITY</span>
         <span>LINUX</span>
         <span>WEB</span>
-
       </div>
 
     </div>
 
-
     <div class="about-copy reveal">
 
-      <p>
-        I'm Vlad, I'm <strong>16</strong>, and I'm really into
-        cybersecurity.
+      <p data-i18n="about_1">
+        I'm Vlad, I'm 16, and I'm really into cybersecurity.
       </p>
 
-      <p>
-        I like learning how systems work, practicing in controlled
-        environments, using Linux and building projects that help me
-        understand security better.
+      <p data-i18n="about_2">
+        I like learning how systems work, practicing in controlled environments,
+        using Linux and building projects that help me understand security better.
       </p>
 
-      <p>
-        This website is my personal cyber corner — a portfolio,
-        learning space and laboratory.
+      <p data-i18n="about_3">
+        This website is my personal cyber corner — a portfolio, learning space and laboratory.
       </p>
 
       <div class="quote">
@@ -233,21 +239,71 @@
 </section>
 
 
+<!-- SKILLS -->
+
+<section id="skills" class="section">
+
+  <div class="section-head reveal">
+    <span>02 / SKILLS</span>
+
+    <h2>
+      Current<br>
+      <em>loadout.</em>
+    </h2>
+  </div>
+
+  <div class="skills-grid">
+
+    <div class="skill reveal">
+      <div><b>Linux / Kali</b><span>85%</span></div>
+      <div class="skill-bar"><span style="width:85%"></span></div>
+    </div>
+
+    <div class="skill reveal">
+      <div><b>Web Security</b><span>70%</span></div>
+      <div class="skill-bar"><span style="width:70%"></span></div>
+    </div>
+
+    <div class="skill reveal">
+      <div><b>Networking</b><span>65%</span></div>
+      <div class="skill-bar"><span style="width:65%"></span></div>
+    </div>
+
+    <div class="skill reveal">
+      <div><b>Python</b><span>60%</span></div>
+      <div class="skill-bar"><span style="width:60%"></span></div>
+    </div>
+
+    <div class="skill reveal">
+      <div><b>HTML / CSS / JS</b><span>80%</span></div>
+      <div class="skill-bar"><span style="width:80%"></span></div>
+    </div>
+
+    <div class="skill reveal">
+      <div><b>Burp Suite</b><span>55%</span></div>
+      <div class="skill-bar"><span style="width:55%"></span></div>
+    </div>
+
+  </div>
+
+</section>
+
+
 <!-- LABS -->
+
 <section id="labs" class="section">
 
   <div class="section-head reveal">
 
-    <span>02 / LABS</span>
+    <span>03 / LABS</span>
 
     <h2>
       Open the<br>
       <em>laboratory.</em>
     </h2>
 
-    <p>
-      Safe browser-based mini labs. Everything runs locally
-      in your browser.
+    <p data-i18n="labs_description">
+      Safe browser-based mini labs. Everything runs locally in your browser.
     </p>
 
   </div>
@@ -256,88 +312,259 @@
   <div class="lab-grid">
 
     <article class="lab-card reveal">
-
       <div class="lab-icon">01</div>
-
-      <div class="lab-meta">
-        BEGINNER · WEB
-      </div>
-
+      <div class="lab-meta">BEGINNER · SECURITY</div>
       <h3>Password Strength</h3>
-
-      <p>
-        Test password strength locally without sending the
-        password anywhere.
-      </p>
-
-      <button class="lab-btn" data-lab="password">
-        Launch Lab →
-      </button>
-
+      <p>Analyze password length and character diversity locally.</p>
+      <button class="lab-btn" data-lab="password">Launch Lab →</button>
     </article>
 
-
     <article class="lab-card reveal">
-
       <div class="lab-icon">02</div>
-
-      <div class="lab-meta">
-        BEGINNER · ENCODING
-      </div>
-
+      <div class="lab-meta">ENCODING</div>
       <h3>Base64 Lab</h3>
-
-      <p>
-        Encode and decode text with Base64 directly in your browser.
-      </p>
-
-      <button class="lab-btn" data-lab="base64">
-        Launch Lab →
-      </button>
-
+      <p>Encode and decode text directly in your browser.</p>
+      <button class="lab-btn" data-lab="base64">Launch Lab →</button>
     </article>
 
-
     <article class="lab-card reveal">
-
       <div class="lab-icon">03</div>
-
-      <div class="lab-meta">
-        BEGINNER · CRYPTO
-      </div>
-
+      <div class="lab-meta">CRYPTO</div>
       <h3>Caesar Cipher</h3>
-
-      <p>
-        Explore a classic substitution cipher and see how shifting works.
-      </p>
-
-      <button class="lab-btn" data-lab="caesar">
-        Launch Lab →
-      </button>
-
+      <p>Explore a classic substitution cipher.</p>
+      <button class="lab-btn" data-lab="caesar">Launch Lab →</button>
     </article>
-
 
     <article class="lab-card reveal">
-
       <div class="lab-icon">04</div>
+      <div class="lab-meta">HASHING</div>
+      <h3>SHA-256</h3>
+      <p>Generate SHA-256 hashes with Web Crypto.</p>
+      <button class="lab-btn" data-lab="hash">Launch Lab →</button>
+    </article>
 
-      <div class="lab-meta">
-        QUICK TOOL · HASHING
+    <article class="lab-card reveal">
+      <div class="lab-icon">05</div>
+      <div class="lab-meta">WEB · TOKENS</div>
+      <h3>JWT Decoder</h3>
+      <p>Decode JWT header and payload locally.</p>
+      <button class="lab-btn" data-lab="jwt">Launch Lab →</button>
+    </article>
+
+    <article class="lab-card reveal">
+      <div class="lab-icon">06</div>
+      <div class="lab-meta">NETWORKING</div>
+      <h3>IP / URL Analyzer</h3>
+      <p>Inspect URL structure and common components.</p>
+      <button class="lab-btn" data-lab="url">Launch Lab →</button>
+    </article>
+
+    <article class="lab-card reveal">
+      <div class="lab-icon">07</div>
+      <div class="lab-meta">REGEX</div>
+      <h3>Regex Playground</h3>
+      <p>Test regular expressions against your own text.</p>
+      <button class="lab-btn" data-lab="regex">Launch Lab →</button>
+    </article>
+
+    <article class="lab-card reveal">
+      <div class="lab-icon">08</div>
+      <div class="lab-meta">ENCODING</div>
+      <h3>Binary / Hex</h3>
+      <p>Convert text into binary and hexadecimal.</p>
+      <button class="lab-btn" data-lab="binary">Launch Lab →</button>
+    </article>
+
+    <article class="lab-card reveal">
+      <div class="lab-icon">09</div>
+      <div class="lab-meta">WEB AWARENESS</div>
+      <h3>XSS Awareness</h3>
+      <p>See how unsafe HTML becomes dangerous — safely.</p>
+      <button class="lab-btn" data-lab="xss">Launch Lab →</button>
+    </article>
+
+    <article class="lab-card reveal">
+      <div class="lab-icon">10</div>
+      <div class="lab-meta">HTTP</div>
+      <h3>Headers Lab</h3>
+      <p>Learn what common HTTP security headers do.</p>
+      <button class="lab-btn" data-lab="headers">Launch Lab →</button>
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- PROJECTS -->
+
+<section id="projects" class="section">
+
+  <div class="section-head reveal">
+    <span>04 / PROJECTS</span>
+
+    <h2>
+      Things I've<br>
+      <em>built.</em>
+    </h2>
+  </div>
+
+  <div class="projects-grid">
+
+    <article class="project reveal">
+      <div class="project-top">
+        <span>01</span>
+        <span>PORTFOLIO</span>
       </div>
 
-      <h3>SHA-256 Hash</h3>
+      <h3>My Cyber Lab</h3>
 
       <p>
-        Generate a SHA-256 hash locally using the browser Web Crypto API.
+        Personal cybersecurity portfolio with interactive browser labs,
+        projects and community reviews.
       </p>
 
-      <button class="lab-btn" data-lab="hash">
-        Launch Lab →
-      </button>
+      <div class="project-progress">
+        <span style="width:100%"></span>
+      </div>
 
+      <small>100% COMPLETE</small>
+
+      <a href="https://github.com/" target="_blank">GitHub ↗</a>
     </article>
+
+
+    <article class="project reveal">
+      <div class="project-top">
+        <span>02</span>
+        <span>LINUX</span>
+      </div>
+
+      <h3>Kali Linux Lab</h3>
+
+      <p>
+        Personal virtual cybersecurity environment for learning
+        Linux, networking and security tools.
+      </p>
+
+      <div class="project-progress">
+        <span style="width:85%"></span>
+      </div>
+
+      <small>85% COMPLETE</small>
+
+      <a href="https://github.com/" target="_blank">GitHub ↗</a>
+    </article>
+
+
+    <article class="project reveal">
+      <div class="project-top">
+        <span>03</span>
+        <span>ANDROID</span>
+      </div>
+
+      <h3>NetHunter Project</h3>
+
+      <p>
+        Exploring mobile cybersecurity and Linux environments
+        on Android hardware.
+      </p>
+
+      <div class="project-progress">
+        <span style="width:55%"></span>
+      </div>
+
+      <small>55% COMPLETE</small>
+
+      <a href="https://github.com/" target="_blank">GitHub ↗</a>
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- ACHIEVEMENTS -->
+
+<section class="section">
+
+  <div class="section-head reveal">
+    <span>05 / ACHIEVEMENTS</span>
+
+    <h2>
+      Unlock<br>
+      <em>progress.</em>
+    </h2>
+  </div>
+
+  <div class="achievements">
+
+    <div class="achievement unlocked reveal">
+      <span>🏆</span>
+      <div>
+        <b>First Lab</b>
+        <small>Complete your first laboratory</small>
+      </div>
+    </div>
+
+    <div class="achievement reveal">
+      <span>🔐</span>
+      <div>
+        <b>Crypto Explorer</b>
+        <small>Explore the crypto labs</small>
+      </div>
+    </div>
+
+    <div class="achievement reveal">
+      <span>🐧</span>
+      <div>
+        <b>Linux User</b>
+        <small>Build your Linux skills</small>
+      </div>
+    </div>
+
+    <div class="achievement reveal">
+      <span>🔥</span>
+      <div>
+        <b>Lab Grinder</b>
+        <small>Complete 10 labs</small>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TERMINAL -->
+
+<section id="terminal" class="section">
+
+  <div class="section-head reveal">
+    <span>06 / TERMINAL</span>
+
+    <h2>
+      Command<br>
+      <em>center.</em>
+    </h2>
+  </div>
+
+  <div class="real-terminal reveal">
+
+    <div class="terminal-top">
+      <span></span><span></span><span></span>
+      <b>interactive-terminal</b>
+    </div>
+
+    <div id="terminalOutput" class="terminal-output">
+      <p>My Cyber Lab terminal v7.0</p>
+      <p>Type <span class="green">help</span> to see commands.</p>
+    </div>
+
+    <div class="terminal-input-row">
+      <span>vlad@cyberlab:~$</span>
+      <input id="terminalInput" autocomplete="off">
+    </div>
 
   </div>
 
@@ -345,48 +572,30 @@
 
 
 <!-- VIDEO -->
+
 <section class="section">
 
   <div class="section-head reveal">
-
-    <span>03 / VISUALS</span>
+    <span>07 / VISUALS</span>
 
     <h2>
       Cyber<br>
       <em>mindset.</em>
     </h2>
-
   </div>
-
 
   <div class="video-card reveal">
 
     <div class="video-overlay">
-
-      <span class="play">
-        ▶
-      </span>
+      <span class="play">▶</span>
 
       <div>
-
-        <b>
-          CYBERSECURITY IN MOTION
-        </b>
-
-        <small>
-          Add your own legal educational video here.
-        </small>
-
+        <b>CYBERSECURITY IN MOTION</b>
+        <small>Add your own educational video here.</small>
       </div>
-
     </div>
 
-    <video
-      controls
-      muted
-      loop
-      preload="metadata">
-    </video>
+    <video controls muted loop preload="metadata"></video>
 
   </div>
 
@@ -394,132 +603,73 @@
 
 
 <!-- REVIEWS -->
-<section id="reviews" class="section reviews-section">
+
+<section id="reviews" class="section">
 
   <div class="section-head reveal">
 
-    <span>04 / COMMUNITY</span>
+    <span>08 / COMMUNITY</span>
 
     <h2>
       Your opinion<br>
       <em>matters.</em>
     </h2>
 
-    <p>
-      Rate the website and leave a comment.
-      Reviews are stored in Supabase.
-    </p>
-
   </div>
 
 
   <div class="review-layout">
 
-
-    <!-- FORM -->
     <div class="rating-box reveal">
 
       <div class="rating-summary">
 
-        <strong id="averageRating">
-          0.0
-        </strong>
+        <strong id="averageRating">0.0</strong>
 
         <div>
-
-          <div id="averageStars" class="big-stars">
-            ☆☆☆☆☆
-          </div>
-
-          <small id="reviewCount">
-            0 reviews
-          </small>
-
+          <div id="averageStars" class="big-stars">☆☆☆☆☆</div>
+          <small id="reviewCount">0 reviews</small>
         </div>
 
       </div>
 
-
       <hr>
 
-
-      <label>
-        YOUR RATING
-      </label>
-
+      <label>YOUR RATING</label>
 
       <div id="starPicker" class="star-picker">
-
-        <button type="button" data-rating="1">★</button>
-        <button type="button" data-rating="2">★</button>
-        <button type="button" data-rating="3">★</button>
-        <button type="button" data-rating="4">★</button>
-        <button type="button" data-rating="5">★</button>
-
+        <button data-rating="1">★</button>
+        <button data-rating="2">★</button>
+        <button data-rating="3">★</button>
+        <button data-rating="4">★</button>
+        <button data-rating="5">★</button>
       </div>
 
+      <input id="reviewName" maxlength="30" placeholder="Your username">
 
-      <input
-        id="reviewName"
-        type="text"
-        maxlength="30"
-        placeholder="Your username"
-      >
-
-
-      <textarea
-        id="reviewComment"
-        maxlength="500"
-        placeholder="Write your comment..."
-      ></textarea>
-
+      <textarea id="reviewComment" maxlength="500" placeholder="Write your comment..."></textarea>
 
       <div class="counter">
-
-        <span>
-          MAX 500 CHARACTERS
-        </span>
-
-        <span id="charCount">
-          0 / 500
-        </span>
-
+        <span>MAX 500 CHARACTERS</span>
+        <span id="charCount">0 / 500</span>
       </div>
 
-
-      <button
-        id="submitReview"
-        class="btn primary full">
-
+      <button id="submitReview" class="btn primary full">
         POST REVIEW →
-
       </button>
 
     </div>
 
 
-    <!-- REVIEWS -->
     <div class="reviews-box reveal">
 
       <div class="reviews-head">
-
-        <span>
-          RECENT REVIEWS
-        </span>
-
-        <button id="refreshReviews">
-          ↻ REFRESH
-        </button>
-
+        <span>RECENT REVIEWS</span>
+        <button id="refreshReviews">↻ REFRESH</button>
       </div>
 
-
       <div id="reviewsList">
-
-        <div class="loading">
-          Loading reviews...
-        </div>
-
+        <div class="loading">Loading reviews...</div>
       </div>
 
     </div>
@@ -532,37 +682,19 @@
 
 
 <footer>
-
-  <span>
-    ⌬ MY CYBER LAB
-  </span>
-
-  <span>
-    BUILT BY VLAD · 2026
-  </span>
-
-  <a href="#home">
-    BACK TO TOP ↑
-  </a>
-
+  <span>⌬ MY CYBER LAB</span>
+  <span>BUILT BY VLAD · 2026</span>
+  <a href="#home">BACK TO TOP ↑</a>
 </footer>
 
 
 <!-- LAB MODAL -->
-<div
-  id="labModal"
-  class="modal"
-  aria-hidden="true">
+
+<div id="labModal" class="modal">
 
   <div class="modal-card">
 
-    <button
-      id="closeModal"
-      class="modal-close">
-
-      ×
-
-    </button>
+    <button id="closeModal" class="modal-close">×</button>
 
     <div id="modalContent"></div>
 
@@ -574,9 +706,7 @@
 <div id="toast" class="toast"></div>
 
 
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="script.js"></script>
 
 </body>
