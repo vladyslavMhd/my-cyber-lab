@@ -591,7 +591,80 @@
 
 </main>
 
+<section id="reviews" class="reviews-section">
 
+  <div class="section-title">
+    <span>COMMUNITY</span>
+    <h2>RATE MY CYBER LAB</h2>
+    <p>Share your experience and help improve the lab.</p>
+  </div>
+
+  <div class="rating-box">
+
+    <div class="rating-summary">
+      <div id="averageRating">0.0</div>
+
+      <div>
+        <div id="averageStars">☆☆☆☆☆</div>
+        <small id="reviewCount">0 reviews</small>
+      </div>
+    </div>
+
+    <hr>
+
+    <p class="rating-label">YOUR RATING</p>
+
+    <div id="starPicker" class="star-picker">
+      <button data-rating="1">★</button>
+      <button data-rating="2">★</button>
+      <button data-rating="3">★</button>
+      <button data-rating="4">★</button>
+      <button data-rating="5">★</button>
+    </div>
+
+    <input
+      id="reviewName"
+      type="text"
+      maxlength="30"
+      placeholder="Your username"
+    >
+
+    <textarea
+      id="reviewComment"
+      maxlength="500"
+      placeholder="Write your comment..."
+    ></textarea>
+
+    <div class="char-counter">
+      <span>MAX 500 CHARACTERS</span>
+      <span id="charCount">0 / 500</span>
+    </div>
+
+    <button id="submitReview" class="review-submit">
+      POST REVIEW →
+    </button>
+
+  </div>
+
+  <div class="reviews-container">
+
+    <div class="reviews-header">
+      <span>RECENT REVIEWS</span>
+
+      <button id="refreshReviews">
+        ↻ REFRESH
+      </button>
+    </div>
+
+    <div id="reviewsList">
+      <div class="review-loading">
+        Loading reviews...
+      </div>
+    </div>
+
+  </div>
+
+</section>
 <footer>
 
   <div class="brand">
